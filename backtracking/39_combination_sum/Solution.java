@@ -44,8 +44,8 @@ public class Solution {
     int nextTarget = target - currentElement;
 
     // start from currentElementIndex to avoid duplicates
-    for (int i = currentElementIndex; i <= candidates.length; i++) {
-      if (candidates[i] > target)
+    for (int i = currentElementIndex; i < candidates.length; i++) {
+      if (candidates[i] > nextTarget)
         break;
 
       getCombinationChain(candidates, i, nextTarget, new LinkedList<>(chain), result);
