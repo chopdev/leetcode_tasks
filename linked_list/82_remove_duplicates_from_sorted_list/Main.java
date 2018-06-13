@@ -12,8 +12,9 @@ public class Main {
         s1.next.next = s2;
         s2.next = s3;
         s3.next = s4;
+        s4.next = new ListNode(4);
 
-        ListNode result = s.deleteDuplicates(s1);
+        ListNode result = s.deleteDuplicates2222(s1);
         System.out.println(printList(result));
 
 
@@ -23,7 +24,7 @@ public class Main {
         l1.next.next.next = new ListNode(2);
         l1.next.next.next.next = new ListNode(3);
 
-        result = s.deleteDuplicates(l1);
+        result = s.deleteDuplicates2222(l1);
         System.out.println(printList(result));
 
         ListNode k1 = new ListNode(1);
@@ -32,7 +33,7 @@ public class Main {
         k1.next.next.next = new ListNode(3);
         k1.next.next.next.next = new ListNode(3);
 
-        result = s.deleteDuplicates(k1);
+        result = s.deleteDuplicates2222(k1);
         System.out.println(printList(result));
     }
 
