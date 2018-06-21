@@ -10,6 +10,8 @@ If this function is called many times, how would you optimize it?
 // Good explanation
 // https://discuss.leetcode.com/topic/42572/sharing-my-2ms-java-solution-with-explanation
 // https://discuss.leetcode.com/topic/9764/java-solution-and-optimization
+
+// example 0000_0000_0000_0000_0000_0000_0000_1101 should become 1011_0000_0000_0000_0000_0000_0000_0000
 public class Solution {
 
     public int reverseBits(int n) {
