@@ -16,6 +16,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+ // good explanation https://leetcode.com/problems/balanced-binary-tree/discuss/35691/The-bottom-up-O(N)-solution-would-be-better
 class Solution {
 
     // class to return two values
@@ -27,7 +29,7 @@ class Solution {
     }
 
     // Mine solution
-    // Runtime O(log(N))
+    // Runtime O(N)
     public boolean isBalanced(TreeNode root) {
         return isBalancedInternal(root, 0).isBalanced;
     }
