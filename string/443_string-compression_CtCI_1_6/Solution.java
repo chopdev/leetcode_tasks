@@ -1,3 +1,4 @@
+import javax.print.DocFlavor;
 import java.util.IntSummaryStatistics;
 
 //*
@@ -46,55 +47,5 @@ public class Solution {
             res.append(count);
             res.append(curr);
         }
-    }
-
-
-    // Not working solution
-    public int compress(char[] chars) {
-        if(chars == null || chars.length == 0) return 0;
-
-        int counter = 1;
-        char prev = chars[0];
-        int nextIndex = 1;
-
-        for (int i = 1; i < chars.length; i++) {
-            if(prev == chars[i]){
-                counter ++;
-                chars[i] = Character.MIN_VALUE;
-            }
-            else {
-                if(counter == 1) {
-                    if(i != nextIndex)
-                        chars[nextIndex] = prev;
-                    nextIndex++;
-                }
-                else
-                    nextIndex += insertNumber(chars, nextIndex, counter);
-
-
-                counter = 1;
-                prev = chars[i];
-            }
-        }
-
-        if(nextIndex != chars.length) {
-            chars[nextIndex] = prev;
-            chars[chars.length - 1] = Character.MIN_VALUE;
-            nextIndex ++;
-
-            if(counter > 1)
-                insertNumber(chars, nextIndex, counter);
-        }
-
-        return chars.length;
-    }
-
-    int insertNumber(char[] arr, int i, int number) {
-        String s = Integer.toString(number);
-        for (int j = 0; j < s.length(); j++) {
-            arr[i + j] = s.charAt(j);
-        }
-
-        return s.length();
     }
 }

@@ -25,17 +25,20 @@ public class Main {
         char[] ch3 = new char[] { 'a', 'b', 'b', 'a'};
         char[] ch4 = new char[] { 'a', 'a', 'a', 'a', 'a', 'a','a', 'a', 'a'};
         char[] ch5 = new char[] { 'a', 'a', 'a', 'b', 'b', 'b', 'c'};
+        char[] ch6 = new char[] { 'a', 'a', 'b', 'b', 'c', 'c', 'c'};
         s.compress(ch0);
         s.compress(ch1);
         s.compress(ch2);
         s.compress(ch3);
         s.compress(ch4);
         s.compress(ch5);
+        s.compress(ch6);
         System.out.println(Arrays.toString(ch0));
         System.out.println(Arrays.toString(ch1));
         System.out.println(Arrays.toString(ch2));
         System.out.println(Arrays.toString(ch3));
         System.out.println(Arrays.toString(ch4));
         System.out.println(Arrays.toString(ch5));
+        System.out.println(Arrays.toString(ch6));
     }
 }
