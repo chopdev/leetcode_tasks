@@ -49,6 +49,27 @@ public class Solution {
         else
             return next;
     }
+	
+	
+	/**
+	 * mehtod 3: iteration Time: O(N), Space O(1)
+	 * Not mine, but easy and handsome
+	 */
+	public ListNode kthToLast3(ListNode node, int k) {
+		ListNode left = node;
+		ListNode right = node;
+		for (int i = 0; i < k; i++) {
+			if (right == null) 
+				return null;
+
+			right = right.next;
+		}
+		while (right != null) {
+			right = right.next;
+			left = left.next;
+		}
+		return left;
+	}
 }
 
 class Item {
