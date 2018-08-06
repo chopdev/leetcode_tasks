@@ -23,5 +23,4 @@ public class Main {
             curr = curr.next;
         }
     }
-    }
 }
