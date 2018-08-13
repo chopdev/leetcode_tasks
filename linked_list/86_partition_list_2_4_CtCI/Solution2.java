@@ -8,7 +8,7 @@
  * Input: head = 1->4->3->2->5->2, x = 3
  * Output: 1->2->2->4->3->5
  * */
-public class Solution {
+public class Solution2 {
     // Mine solution Time: O(N), Space O(1)
     public ListNode partition(ListNode head, int x) {
         ListNode lHead = null, lTail = null, rHead = null, rTail = null, curr = head; // define left head and tails queues, the same for right
