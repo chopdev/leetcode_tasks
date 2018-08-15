@@ -47,7 +47,7 @@ public class Solution {
     }
 
     // Mine solution, time O(N) , Space O(1) - but we modify initial list
-    // We reverse left part from the middle and compare left and right parts of list 
+    // We reverse left part from the middle and compare left and right parts of list
     public boolean isPalindrome2222(ListNode head) {
         if(head == null || head.next == null) return true;
         if(head.next.next == null) return  head.val == head.next.val;
