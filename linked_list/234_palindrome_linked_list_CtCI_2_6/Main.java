@@ -17,18 +17,18 @@ public class Main {
         t6.next = t7;
 
 	    Solution s = new Solution();
-	    boolean res1 = s.isPalindrome(t1);
+	    boolean res1 = s.isPalindrome2222(t1);
 
         ListNode r1 = new ListNode(1);
-        ListNode r2 = new ListNode(0);
-        ListNode r3 = new ListNode(1);
+        ListNode r2 = new ListNode(1);
+        ListNode r3 = new ListNode(0);
         ListNode r4 = new ListNode(1);
 
         r1.next = r2;
         r2.next = r3;
         r3.next = r4;
 
-        boolean res2 = s.isPalindrome(r1);
+        boolean res2 = s.isPalindrome2222(r1);
 
 	    System.out.println(res1);
         System.out.println(res2);
