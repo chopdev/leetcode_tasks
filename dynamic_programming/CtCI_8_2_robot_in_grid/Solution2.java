@@ -28,8 +28,7 @@ public class Solution2 {
         int rowsCount = arr.length;
         int colCount = arr[0].length;
         int[][] mem = new int[rowsCount][colCount];
-        HashSet<String> visited = new HashSet<>();
-        int res = shortestPath(arr, rowsCount, colCount, 0, 0, mem, visited);
+        int res = shortestPath(arr, rowsCount, colCount, 0, 0, mem);
         if(res == Integer.MAX_VALUE) return -1;
         return res;
     }
@@ -39,8 +38,7 @@ public class Solution2 {
                             int colCount,
                             int row,
                             int col,
-                            int[][] mem,
-                            HashSet<String> visited)
+                            int[][] mem)
     {
         // out of bounds
         if(row < 0 ||  row > rowsCount - 1 || col < 0 || col > colCount - 1 || arr[row][col] == 0)
@@ -52,10 +50,10 @@ public class Solution2 {
         if(mem[row][col] == -1) return Integer.MAX_VALUE; // if point was visited, return (to avoid cycles)
         mem[row][col] = -1; // mark as visited
 
-        int bottom = shortestPath(arr, rowsCount, colCount, row + 1, col, mem, visited);
-        int right = shortestPath(arr, rowsCount, colCount, row, col + 1, mem, visited);
-        int left = shortestPath(arr, rowsCount, colCount, row, col - 1, mem, visited);
-        int top = shortestPath(arr, rowsCount, colCount, row - 1, col, mem, visited);
+        int bottom = shortestPath(arr, rowsCount, colCount, row + 1, col, mem);
+        int right = shortestPath(arr, rowsCount, colCount, row, col + 1, mem);
+        int left = shortestPath(arr, rowsCount, colCount, row, col - 1, mem);
+        int top = shortestPath(arr, rowsCount, colCount, row - 1, col, mem);
 
         // detect shortest path from this point and momoize it
         int val = Integer.min(Integer.min(bottom, right), Integer.min(left, top));
