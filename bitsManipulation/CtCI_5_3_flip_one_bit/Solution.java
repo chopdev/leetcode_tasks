@@ -7,31 +7,35 @@ Input: 1775 (or: 1113111131111)
 Output: 8
 * */
 public class Solution {
-    public int getLongestSequence(int n) {
-        int maxCount = 0, prevCount = 0, currCount = 0, zeroCount = 0;
 
-        for (int i = 31; i >= 0 ; i++) {
-            int digit = (n >> i) & 1;
-            if(digit == 1) {
-                currCount ++;
-                if(zeroCount > 1) {
-                    prevCount = 0;
-                    zeroCount = 0;
-                }
-                else if(zeroCount == 1 && prevCount == 0)
-                    zeroCount = 0;
-            }
+    // Mine O(N^2) solution, Space O(1)
+    public int getLongestSequence(int n) {
+        int max = 0;
+        for (int i = 0; i < 32 ; i++) {
+            int digit = (n >>> i) & 1;
+            if(digit == 1)
+                continue;
+            int reset = 1 << i;
+            int tempMax = getMaxCount(n | reset);
+            max = max > tempMax ? max : tempMax;
+        }
+        return max;
+    }
+
+    private int getMaxCount(int n) {
+        int maxCount = 0;
+        int currCount = 0;
+        for (int i = 31; i >= 0 ; i--) {
+            int digit = (n >>> i) & 1;
+            if(digit == 1)
+                currCount++;
             else {
-                zeroCount ++;
-                if(zeroCount > 1) continue;
-                if(prevCount > 0 && zeroCount == 1)
-                    maxCount = maxCount > currCount + 1 + prevCount ? maxCount : currCount + 1 + prevCount;
-                else
-                    maxCount = maxCount > currCount + 1 ? maxCount : currCount + 1;
-                prevCount = currCount;
+                maxCount = maxCount > currCount ? maxCount : currCount;
+                currCount = 0;
             }
         }
 
+        maxCount = maxCount > currCount ? maxCount : currCount;
         return maxCount;
     }
 }
