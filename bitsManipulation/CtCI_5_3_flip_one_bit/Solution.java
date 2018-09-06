@@ -38,4 +38,25 @@ public class Solution {
         maxCount = maxCount > currCount ? maxCount : currCount;
         return maxCount;
     }
+
+    // Not mine solution Time O(b), O(1) space , b - number of bits in n
+    public int getLongestSequence2222(int n) {
+        int maxCount = 0, prevCount = 0, currCount = 0;
+        while (n != 0) {
+            if((n & 1) == 1)
+                currCount ++;
+            else {
+                if((n & 2) == 0)
+                    prevCount = 0;
+                else
+                    prevCount = currCount;
+                currCount = 0;
+            }
+
+            maxCount = Math.max(currCount + prevCount + 1, maxCount);
+            n >>>= 1;
+        }
+
+        return maxCount;
+    }
 }
