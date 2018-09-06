@@ -1,4 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /*
@@ -48,6 +51,32 @@ public class Solution {
             j++;
         }
 
+        return res;
+    }
+
+    // Mine solution O(N*logN), Space: O(2*N)=O(N) where N - number of points
+    public int[][] getClosestHotels2222(int[][] points, int numberOfClosest) {
+        if(points == null) return null;
+        if(numberOfClosest >= points.length) return points;
+
+        // O(N)
+        Node[] dest = new Node[points.length];
+        for (int i = 0; i < points.length; i++) {
+            double val = Math.sqrt(Math.pow(points[i][0], 2) + Math.pow(points[i][1], 2));
+            int index = i;
+            dest[i] = new Node(val, index);
+        }
+
+        // O(N*logN)
+        Arrays.sort(dest, (o1, o2) -> o1.val > o2.val ? 1 : -1);
+
+        // O(N)
+        int[][] res = new int[numberOfClosest][2];
+        for (int i = 0; i < numberOfClosest; i++) {
+            int index = dest[i].index;
+            res[i][0] = points[index][0];
+            res[i][1] = points[index][1];
+        }
         return res;
     }
 }

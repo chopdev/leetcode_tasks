@@ -23,6 +23,8 @@ public class Main {
 
         Solution s = new Solution();
         int[][] res = s.getClosestHotels(new int[][] { {40, 40}, {1, 2}, {2, 2}, {30, 2}, {1, 90}, {5, 6}, {22, 22} }, 4);
+        int[][] res2 = s.getClosestHotels2222(new int[][] { {40, 40}, {1, 2}, {2, 2}, {30, 2}, {1, 90}, {5, 6}, {22, 22} }, 4);
         System.out.println(Arrays.deepToString(res));
+        System.out.println(Arrays.deepToString(res2));
     }
 }
