@@ -62,4 +62,12 @@ public class Solution {
 
         return length == Integer.MAX_VALUE ? "" : s.substring(head, head + length + 1);
     }
+
+    /*
+    * Another approach mine solution is to use recursive solution + dynamic programming
+    * The idea is to shorthand string s on each recursive call from 1 side and from other side
+    * and check which case has lesser length and valid
+    * Without dynamic programming, time complexity O(2^n * n) - 2^n - two recursive branches on each recursive level, n - check if substring has all letters of t
+    * WIth dynamic programming: time complexity O(n^2) , n - number of recursive calls and n - checking of t
+    * */
 }
