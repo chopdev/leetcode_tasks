@@ -60,7 +60,7 @@ public class Solution {
     }
 
 
-    // Solution after looking in book, but in book used other approach
+    // Solution after looking in book
     // Here approach is the same, but we work with strings directly
     public List<String> getPermutations2222(String s) {
         if(s == null) return null;
