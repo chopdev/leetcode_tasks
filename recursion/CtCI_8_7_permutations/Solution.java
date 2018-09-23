@@ -5,6 +5,12 @@ characters.
 * */
 public class Solution {
 
+    // Complexity O(N!) why? for first position we can have N chars, for second N-1 ...
+    // Space O(N) deepness of recursion + array
+
+
+
+    // LOOK book easier solution is there
     // Mine solution
     // Explanation
     // A -> A
@@ -51,5 +57,34 @@ public class Solution {
             }
         }
         return res;
+    }
+
+
+    // Solution after looking in book, but in book used other approach
+    // Here approach is the same, but we work with strings directly
+    public List<String> getPermutations2222(String s) {
+        if(s == null) return null;
+
+        List<String> list = new ArrayList<>();
+        if(s.length() == 1) {
+            list.add(s);
+            return list;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            char curr = s.charAt(i);
+            String reminder = removeCharAt(s, i);
+            List<String> temp = getPermutations(reminder);
+            for(String  perms : temp)
+                list.add(curr + perms);
+        }
+
+        return list;
+    }
+
+    String removeCharAt(String s, int i) {
+        String s1 = s.substring(0, i);
+        String s2 = s.substring(i + 1);
+        return s1 + s2;
     }
 }
