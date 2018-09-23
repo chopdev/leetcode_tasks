@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        List<String> res1 = s.getPermutatations("AAA");
-        List<String> res2 = s.getPermutatations("AABA");
-        List<String> res3 = s.getPermutatations("AABBC");
+        List<String> res1 = s.getPermutatations2222("AAA");
+        List<String> res2 = s.getPermutatations2222("AABA");
+        List<String> res3 = s.getPermutatations2222("AABBC");
 
         for (String str : res1)
             System.out.print(str + "  ");
