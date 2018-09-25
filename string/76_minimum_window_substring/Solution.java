@@ -10,6 +10,13 @@ Output: "BANC"
 Note:
 If there is no such window in S that covers all characters in T, return the empty string "".
 If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
+
+
+SIMILAR TASK but with arrays
+
+Given two lists: S1 and S2, S1 is bigger than S2. Find start and end indexes of sublist in S1 that contains all elements from S2. 
+If there several lists with the same minimum length, then return sublist with smaller start index.
+
 * */
 public class Solution {
 
