@@ -39,7 +39,7 @@ public class Solution {
     }
 
     // This solution is from the book, but with mine interpretation
-    // It is better, cause it uses char[] builder that is modified on each level of recursion 
+    // It is better, cause it uses char[] builder that is modified on each level of recursion
     public List<String> getAllParentheses2222(int n) {
         char[] builder = new char[n * 2];
         List<String> res = new ArrayList<>();
