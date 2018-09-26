@@ -3,27 +3,37 @@
  pennies (1 cent), write code to calculate the number of ways of representing n cents.
  */
 public class Solution {
-    public int getNumberOfCombinations(int cents) {
-        int[] dp = new int[cents + 1];
-        for (int i = 0; i < cents + 1; i++) {
-            dp[i] = -1;
-        }
 
-        return getNumberOfCombinationsInternal(cents, dp);
+    // Not mine solution
+    // Time ???
+    
+    // make change beginning from 0, if cents = 100
+    // makeChange(100 with 0 of 25)
+    // makeChange(100 with 1 of 25) -> makeChange(75 with 0 of 10), makeChange(75 with 1 of 10) and so on
+    // makeChange(100 with 2 of 25)
+    // ...
+    public int getNumberOfExchanges(int cents) {
+        if(cents <= 0) return -1;
+        int[] monets = new int[] {1, 5, 10, 25};
+        int[][] dp = new int[cents + 1][monets.length];
+
+        return getNumberOfExchangesInternal(cents, 0, monets, dp);
     }
 
-    public int getNumberOfCombinationsInternal(int cents, int[] dp) {
-        if(cents < 0) return 0;
+    public int getNumberOfExchangesInternal(int cents, int index, int[] monets, int[][] dp ) {
         if(cents == 0) return 1;
+        if(index >= monets.length) return 0;
 
-        if(dp[cents] >= 0) return dp[cents];
+        if(dp[cents][index] > 0)
+            return dp[cents][index];
 
-        int count1 = getNumberOfCombinationsInternal(cents - 25, dp);
-        int count2 = getNumberOfCombinationsInternal(cents - 10, dp);
-        int count3 = getNumberOfCombinationsInternal(cents - 5, dp);
-        int count4 = getNumberOfCombinationsInternal(cents - 1, dp);
+        int res = 0;
+        for (int i = 0; cents >= i * monets[index]; i++) {
+            int remCents = cents - i * monets[index];
+            res += getNumberOfExchangesInternal(remCents, index + 1, monets, dp);
+        }
 
-        dp[cents] = count1 + count2 + count3 + count4;
-        return dp[cents];
+        dp[cents][index] = res;
+        return res;
     }
 }
