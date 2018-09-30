@@ -23,6 +23,7 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 EXPLANATION
 https://leetcode.com/articles/intersection-of-two-linked-lists/
 https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/49785/Java-solution-without-knowing-the-difference-in-len!
+https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/49792/Concise-JAVA-solution-O(1)-memory-O(n)-time
 
 * */
 
