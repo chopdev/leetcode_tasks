@@ -21,6 +21,7 @@ public class MedianFinder {
 
     // Not mine solution, but I was close to it
     // Time O(logN) for adding and O(1) for find median
+    // EXPLANATION https://leetcode.com/articles/find-median-from-data-stream/
     private PriorityQueue<Integer> maxHeap;
     private PriorityQueue<Integer> minHeap;
 

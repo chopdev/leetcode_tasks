@@ -4,7 +4,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Solution two = new Solution();
+        Solution s = new Solution();
 
         List<List<Integer>> forwardRouteList = new ArrayList<>();
         List<List<Integer>> returnRouteList = new ArrayList<>();
@@ -39,6 +39,6 @@ public class Main {
         returnRouteList.add(tmp2);
         returnRouteList.add(tmp22);
         returnRouteList.add(tmp222);
-        two.optimalUtilization(20, forwardRouteList, returnRouteList);
+        s.optimalFlights2222(20, forwardRouteList, returnRouteList);
     }
 }
