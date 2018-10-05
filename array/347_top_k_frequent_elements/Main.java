@@ -17,7 +17,7 @@ public class Main {
 
 
 
-       /* PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
                 return Integer.compare(o2, o1);
@@ -29,6 +29,6 @@ public class Main {
         priorityQueue.add(20);
 
         int t1 = priorityQueue.poll();
-        int t2 = priorityQueue.poll();*/
+        int t2 = priorityQueue.poll();
     }
 }

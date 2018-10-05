@@ -46,4 +46,28 @@ public class Solution {
 
         return res;
     }
+
+
+    // Not mine solution, uses min heap
+    // Time O(N*logK)
+    public List<Integer> topKFrequent2222(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int n: nums){
+            map.put(n, map.getOrDefault(n,0)+1);
+        }
+
+        PriorityQueue<Map.Entry<Integer, Integer>> minHeap =
+                new PriorityQueue<>((a, b) -> Integer.compare(a.getValue(), b.getValue()));
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            minHeap.add(entry);
+            if (minHeap.size() > k) minHeap.poll();
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while(res.size()<k){
+            Map.Entry<Integer, Integer> entry = minHeap.poll();
+            res.add(entry.getKey());
+        }
+        return res;
+    }
 }
