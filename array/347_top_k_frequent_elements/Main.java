@@ -9,8 +9,8 @@ public class Main {
 
 
         Solution s = new Solution();
-        List<Integer> res = s.topKFrequent(new int[] {1, 1, 1, 3,3,3,3,3,3,3, 4,4,4,4,2,5,6}, 2);
-
+        List<Integer> res = s.topKFrequent3333(new int[] {1, 1, 1, 3,3,3,3,3,3,3, 4,4,4,4,2,5,6}, 2);
+        List<Integer> res1 = s.topKFrequent3333(new int[] {1, 2, 3,4,5,6,7,8}, 2);
         for (int l : res) {
             System.out.println(l);
         }

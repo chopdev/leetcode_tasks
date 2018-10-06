@@ -70,4 +70,32 @@ public class Solution {
         }
         return res;
     }
+
+    // not mine solution
+    // Time O(N), space O(N)
+    public List<Integer> topKFrequent3333(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int n: nums){
+            map.put(n, map.getOrDefault(n,0)+1);
+        }
+
+        List<Integer>[] buckets = new List[nums.length + 1];
+        for (Integer key : map.keySet()) {
+            int count = map.get(key);
+            if(buckets[count] == null)
+                buckets[count] = new ArrayList<>();
+            buckets[count].add(key);
+        }
+
+        List<Integer> res = new LinkedList<>();
+        for(int i=buckets.length-1; i>0 && k>0; --i){
+            if(buckets[i]!=null) {
+                List<Integer> list = buckets[i];
+                res.addAll(list);  // could add to result more than K elements
+                k-= list.size();
+            }
+        }
+        return res;
+
+    }
 }
