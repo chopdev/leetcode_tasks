@@ -74,7 +74,7 @@ public class Solution {
         for (int i = 0; i < s.length(); i++) {
             char curr = s.charAt(i);
             String reminder = removeCharAt(s, i);
-            List<String> temp = getPermutations(reminder);
+            List<String> temp = getPermutations2222(reminder);
             for(String  perms : temp)
                 list.add(curr + perms);
         }
