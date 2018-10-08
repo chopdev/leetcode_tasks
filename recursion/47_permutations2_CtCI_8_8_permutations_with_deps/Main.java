@@ -19,5 +19,8 @@ public class Main {
         for (String str : res3)
             System.out.print(str + "  ");
         System.out.println();
+
+        Leetcode leetcode = new Leetcode();
+        List<List<Integer>> resLeet = leetcode.permuteUnique(new int[]{1, 2, 3, 1});
     }
 }
