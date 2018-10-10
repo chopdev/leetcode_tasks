@@ -65,4 +65,20 @@ public class Solution {
 
         return tuple.value;
     }
+
+    public int kthSmallest3333(int[][] matrix, int k) {
+        int n = matrix.length;
+        int lo = matrix[0][0];
+        int hi = matrix[n-1][n-1];
+
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                int j = n - 1;
+                while ()
+            }
+        }
+    }
 }
