@@ -49,6 +49,8 @@ public class Solution {
 
     // Not mine solution, very fast
     // O(MAX(K, N)*logN), Space O(logN)
+    // The idea here is to insert next to smallest Tuple K times
+    // https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
     public int kthSmallest2222(int[][] matrix, int k) {
         PriorityQueue<Tuple> priorityQueue = new PriorityQueue<>(k);
         int n = matrix.length;
@@ -66,19 +68,49 @@ public class Solution {
         return tuple.value;
     }
 
+    // Not mine solution, wrote code by my self after looking the answer
+    // Binary search in range
+    // So we divide our matrix until lo > hi, on the last step they will meet and we will return the right value
+    // Time O(log(N^2)), Space O(1)
+    // https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
     public int kthSmallest3333(int[][] matrix, int k) {
         int n = matrix.length;
         int lo = matrix[0][0];
         int hi = matrix[n-1][n-1];
+        if(n <= 1) return lo;
 
-        while (lo < hi) {
+        while (lo <= hi) {
             int mid = (lo + hi) / 2;
 
             int count = 0;
             for (int i = 0; i < n; i++) {
                 int j = n - 1;
-                while ()
+                while (j >= 0 && matrix[j][i] > mid) j--;
+                if(j >= 0) count += j + 1;
             }
+
+            if(count < k)
+                lo = mid + 1;
+            else hi = mid - 1;
         }
+
+        return lo; // why do we return lo? because count < k exclusive, so when we have equal value, lo is on right position
+    }
+
+    //https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
+    // Solution with exclusive hi value
+    public int kthSmallest4444(int[][] matrix, int k) {
+        int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+        while(lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            int count = 0,  j = matrix[0].length - 1;
+            for(int i = 0; i < matrix.length; i++) {
+                while(j >= 0 && matrix[i][j] > mid) j--;
+                count += (j + 1);
+            }
+            if(count < k) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
     }
 }
