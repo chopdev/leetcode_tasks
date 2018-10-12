@@ -1,5 +1,7 @@
 
 public class Cell {
+    public boolean visited;
+
     public boolean top;
     public boolean bottom;
     public boolean left;
