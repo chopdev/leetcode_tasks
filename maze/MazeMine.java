@@ -25,10 +25,10 @@ import java.util.Stack;
  *          1.Pop a cell from the stack
  *          2.Make it the current cell
  */
+// Easy to understand
 public class MazeMine {
 
     private int n;
-    private int unvisitedCount;
     private Cell[][] maze;
 
     public MazeMine(int n) {
@@ -43,7 +43,6 @@ public class MazeMine {
         StdDraw.setYscale(0, n);
 
         maze = new Cell[n][n];
-        unvisitedCount = n;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 maze[i][j] = new Cell(i, j);
@@ -55,6 +54,7 @@ public class MazeMine {
     // Uses from top-left coordinate system (usual to 2 dimensional arrays)
     // there is some bug here
     private void generate(int y, int x) {
+        int unvisitedCount = n;
         Cell curr = maze[y][x];
         Stack<Cell> stack = new Stack<>();
         stack.add(curr);
@@ -104,6 +104,9 @@ public class MazeMine {
     }
 
     // Similar to Sedgwik recursive implementation
+    // Easy to understand
+    // All cells should be visited in the end. We select random neighbor cell that is unvisited and break the wall.
+    // Moving to next cell. Each cell would have at least one broken wall at the end, because the wall is broken when we visit cell
     private void generateInCommonCoordinateSystem(int x, int y) {
         Cell curr = maze[x][y];
         curr.visited = true;
