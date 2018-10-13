@@ -7,6 +7,23 @@ import java.util.Stack;
 
 /**
  * https://en.wikipedia.org/wiki/Maze_generation_algorithm
+ *
+ *
+ * Recursive backtracker
+ *
+ * Recursive backtracker on a hexagonal grid
+ * The depth-first search algorithm of maze generation is frequently implemented using backtracking:
+ *
+ * 1. Make the initial cell the current cell and mark it as visited
+ * 2. While there are unvisited cells
+ *      1.If the current cell has any neighbours which have not been visited
+ *          1.Choose randomly one of the unvisited neighbours
+ *          2.Push the current cell to the stack
+ *          3.Remove the wall between the current cell and the chosen cell
+ *          4. Make the chosen cell the current cell and mark it as visited
+ *      2.Else if stack is not empty
+ *          1.Pop a cell from the stack
+ *          2.Make it the current cell
  */
 public class MazeMine {
 
@@ -17,7 +34,7 @@ public class MazeMine {
     public MazeMine(int n) {
         this.n = n;
         init();
-        generate(0, 0);
+        generateInCommonCoordinateSystem(0, 0);
     }
 
     private void init() {
@@ -34,6 +51,9 @@ public class MazeMine {
         }
     }
 
+    // Mine iterative implementation  of Recursive backtracker algorithm
+    // Uses from top-left coordinate system (usual to 2 dimensional arrays)
+    // there is some bug here
     private void generate(int y, int x) {
         Cell curr = maze[y][x];
         Stack<Cell> stack = new Stack<>();
@@ -57,8 +77,7 @@ public class MazeMine {
 
             Random r = new Random();
             while (true) {
-                int random = StdRandom.uniform(4);
-                        //r.nextInt(4);
+                int random = r.nextInt(4);
                 if (random == 0 && !visited(curr.i + 1, curr.j)) {
                     curr.bottom = true;
                     maze[curr.i + 1][curr.j].top = true;
@@ -84,8 +103,46 @@ public class MazeMine {
         }
     }
 
+    // Similar to Sedgwik recursive implementation
+    private void generateInCommonCoordinateSystem(int x, int y) {
+        Cell curr = maze[x][y];
+        curr.visited = true;
+
+        while (!visited(curr.i + 1, curr.j) ||
+                !visited(curr.i - 1, curr.j) ||
+                !visited(curr.i, curr.j + 1) ||
+                !visited(curr.i, curr.j - 1)) {
+
+            Random r = new Random();
+            while (true) {
+                int random = r.nextInt(4);
+                if (random == 0 && !visited(curr.i, curr.j - 1)) {
+                    curr.bottom = true;
+                    maze[curr.i][curr.j - 1].top = true;
+                    generateInCommonCoordinateSystem(curr.i, curr.j-1);
+                    break;
+                } else if (random == 1 && !visited(curr.i, curr.j + 1)) {
+                    curr.top = true;
+                    maze[curr.i][curr.j + 1].bottom = true;
+                    generateInCommonCoordinateSystem(curr.i, curr.j+1);
+                    break;
+                } else if (random == 2 && !visited(curr.i + 1, curr.j)) {
+                    curr.right = true;
+                    maze[curr.i + 1][curr.j].left = true;
+                    generateInCommonCoordinateSystem(curr.i + 1, curr.j);
+                    break;
+                } else if (random == 3 && !visited(curr.i - 1, curr.j)) {
+                    curr.left = true;
+                    maze[curr.i - 1][curr.j].right = true;
+                    generateInCommonCoordinateSystem(curr.i - 1, curr.j);
+                    break;
+                }
+            }
+        }
+    }
+
     private boolean visited(int i, int j) {
-        if (i >= n || j > n || i < 0 || j < 0)
+        if (i >= n || j >= n || i < 0 || j < 0)
             return true;
 
         return maze[i][j].visited;
@@ -94,19 +151,17 @@ public class MazeMine {
 
     public void draw() {
         StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.filledCircle(n/2.0 + 0.5, n/2.0 + 0.5, 0.375);
-        StdDraw.filledCircle(1.5, 1.5, 0.375);
+        StdDraw.filledCircle(n - 0.5, n - 0.5, 0.375);
+        StdDraw.filledCircle(0.5, 0, 0.375);
 
         StdDraw.setPenColor(StdDraw.BLACK);
 
-    /*    StdDraw.line(0, 0, 1, 0);
-        StdDraw.line(0, 1, 1, 1);*/
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if(!maze[i][j].bottom) StdDraw.line(j, n-i-1 , j+1, n-i-1); // x0 y0  x1 y1
-                if(!maze[i][j].top) StdDraw.line(j, n-i , j + 1, n-i);
-                if(!maze[i][j].right) StdDraw.line(j + 1, n-i, j+1, n-i-1);
-                if(!maze[i][j].left) StdDraw.line(j - 1, n-i, j-1, n-i-1);
+        for (int x = 0; x < n; x++) {
+            for (int y = 0; y < n; y++) {
+                if(!maze[x][y].bottom)  StdDraw.line(x, y, x+1, y);
+                if(!maze[x][y].top) StdDraw.line(x, y+1, x+1, y+1);
+                if(!maze[x][y].left)  StdDraw.line(x, y, x, y+1);
+                if(!maze[x][y].right) StdDraw.line(x+1, y, x+1, y+1);
             }
         }
         StdDraw.show();

@@ -1,6 +1,7 @@
 import edu.princeton.cs.introcs.StdDraw;
 import edu.princeton.cs.introcs.StdRandom;
 
+// Not mine solution. Without Cell class.
 public class Maze {
     private int n;                 // dimension of maze
     private boolean[][] north;     // is there a wall to north of cell i, j
