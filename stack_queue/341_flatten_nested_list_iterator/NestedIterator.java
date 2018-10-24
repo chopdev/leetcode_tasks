@@ -39,58 +39,35 @@ import java.util.Stack;
  *     public List<NestedInteger> getList();
  * }
  */
+
+
+// Not mine smart solution
+//https://leetcode.com/problems/flatten-nested-list-iterator/discuss/80147/Simple-Java-solution-using-a-stack-with-explanation
+    // other goood solution using iterator https://leetcode.com/problems/flatten-nested-list-iterator/discuss/80175/Share-my-Java-neat-solution-8ms
 public class NestedIterator implements Iterator<Integer> {
 
-    Stack<Integer> indexes;
-    Stack<List<NestedInteger>> lists;
+    Stack<NestedInteger> stack;
 
     public NestedIterator(List<NestedInteger> nestedList) {
-        if(nestedList == null) return;
-
-        indexes = new Stack<>();
-        lists = new Stack<>();
-
-        if(nestedList.size() > 0) {
-            indexes.push(0);
-            lists.push(nestedList);
-        }
+        stack = new Stack<>();
+        for (int i = nestedList.size() - 1; i >= 0; i--)
+            stack.push(nestedList.get(i));
     }
 
     @Override
     public Integer next() {
-        int res = -1;
-        int index = indexes.pop();
-        List<NestedInteger> list = lists.pop();
-
-        while (index < list.size() && !list.get(index).isInteger()) {
-            List<NestedInteger> element = list.get(index).getList();
-            if(element.size() == 0) {
-                index ++;
-                continue;
-            }
-
-            pushToStacks(index + 1, list);
-            list = element;
-            index = 0;
-        }
-
-        if(index < list.size()) {
-            res =  list.get(index).getInteger();
-            pushToStacks(index + 1, list);
-        }
-
-        return res;
+        return stack.pop().getInteger();
     }
 
     @Override
     public boolean hasNext() {
-        return lists.size() > 0;
-    }
+        while (!stack.empty()) {
+            if(stack.peek().isInteger()) return true;
 
-    private void pushToStacks(int index, List<NestedInteger> list) {
-        if(index < list.size()) {
-            indexes.push(index);
-            lists.push(list);
+            List<NestedInteger> nestedList = stack.pop().getList();
+            for (int i = nestedList.size() - 1; i >= 0; i--)
+                stack.push(nestedList.get(i));
         }
+        return false;
     }
 }
