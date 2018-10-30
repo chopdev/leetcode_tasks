@@ -22,6 +22,10 @@
 
  Your solution should be in logarithmic complexity.
 
+ 
+ SOLUTION DESCRIPTION
+ https://leetcode.com/articles/find-peak-element/
+ 
  */
 public class Solution {
 
@@ -51,6 +55,7 @@ public class Solution {
 
 
     // not mine solution
+	// https://leetcode.com/articles/find-peak-element/
     public int findPeakElement2222(int[] nums) {
         int l = 0, r = nums.length - 1;
         while (l < r) {
