@@ -36,4 +36,25 @@ public class Solution {
 
         return maxSquare;
     }
+
+
+    // Not mine solution with two pointers
+    // We are moving pointer with a smaller wall in hope to get bigger square on the next iteration
+    public int maxArea2222(int[] height) {
+        if(height == null) return 0;
+        int maxSquare = 0, left = 0, right = height.length - 1;
+
+        while (left < right) {
+            int a = Math.min(height[left], height[right]);
+            int b = right - left;
+            maxSquare = a*b > maxSquare ? a*b : maxSquare;
+
+            if(height[left] > height[right])
+                right --;
+            else
+                left ++;
+        }
+
+        return maxSquare;
+    }
 }
