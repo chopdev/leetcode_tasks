@@ -39,6 +39,7 @@ public class Solution {
 
 
     // Not mine solution with two pointers
+    // I got an idea to use 2 pointers, but didn't figured out how
     // We are moving pointer with a smaller wall in hope to get bigger square on the next iteration
     public int maxArea2222(int[] height) {
         if(height == null) return 0;
