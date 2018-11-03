@@ -15,6 +15,9 @@ Follow up: Could you improve it to O(n log n) time complexity?
 
 // Great explanation of this problem
 // https://habrahabr.ru/post/113108/
+
+// SOLUTION description
+//https://leetcode.com/problems/longest-increasing-subsequence/solution/
 class Solution {
 
     // NOT mine solution - repeated from memory in 2 days

@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 	    Solution s = new Solution();
-	    int res = s.lengthOfLIS(new int[] {10, 3, 4, 1, 5});
+	    int res = s.lengthOfLIS1(new int[] {10, 3, 4, 1, 5});
 	    System.out.println(res);
 
 
