@@ -45,4 +45,25 @@ public class Solution2 {
 
         return slow.next;
     }
+
+
+    // My solution but without previous pointer
+    // We use dummy to avoid checking if first or middle element is deleted
+    public ListNode removeNthFromEnd2222(ListNode head, int n) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode fast = dummy, slow = dummy;
+
+        for (int i = 1; i < n + 1; i++)
+            fast = fast.next;  // set firts on Nth element from beginning
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        slow.next = slow.next.next; // slow is on prev element to element we need to remove
+
+        return dummy.next;
+    }
 }
