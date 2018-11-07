@@ -22,5 +22,21 @@ public class Main {
         System.out.println(res3 == null ? null : res3.value); // 5
         System.out.println(res4 == null ? null : res4.value); // null
         System.out.println(res5 == null ? null : res5.value); // 20
+
+
+
+        ListNode h1 = new ListNode(1);
+        ListNode h2 = new ListNode(2);
+        /*ListNode h3 = new ListNode(3);
+        ListNode h4 = new ListNode(4);
+        ListNode h5 = new ListNode(5);*/
+        h1.next = h2;
+        /*h2.next = h3;
+        h3.next = h4;
+        h4.next = h5;*/
+
+        Solution2 solution2 = new Solution2();
+        solution2.removeNthFromEnd(h1, 2);
+
     }
 }
