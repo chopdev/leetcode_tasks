@@ -16,7 +16,7 @@ public class Solution {
     public int countPrimes(int n) {
         int[] nums = new int[n];
         for (int i = 2; i <= n / 2; i++) {
-            for (int j = i + 1; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {  // It would be much more faster to j+=i
                 if(nums[j] == 1) continue;
                 if(j % i == 0) nums[j] = 1;
             }
