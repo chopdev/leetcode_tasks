@@ -44,7 +44,7 @@ public class Solution {
     // Using Tie, detect common substring for all strs
     // time O(N*K), N - number of strings, K  - length of the largest str
     // O(S) space
-    // similar to 
+    // similar to
     public String longestCommonPrefix2222(String[] strs) {
         if(strs == null || strs.length == 0) return "";
 
