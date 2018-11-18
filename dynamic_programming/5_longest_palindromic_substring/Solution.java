@@ -16,6 +16,9 @@
  Input: "cbbd"
  Output: "bb"
 
+
+ SOLUTION
+ https://leetcode.com/problems/longest-palindromic-substring/solution/
  * */
 public class Solution {
     // My solution without dp
@@ -46,6 +49,7 @@ public class Solution {
         return res2;
     }
 
+
     // My solution with memoization
     // Time ?,  Space O(N^2)
     public String longestPalindrome2222(String s) {
@@ -64,5 +68,24 @@ public class Solution {
         if(res1.length() > res2.length()) dp[i][j] = res1;
         else dp[i][j] = res2;
         return dp[i][j];
+    }
+
+
+    // My non-recursive solution
+    // Time O(N^3), space O(1)
+    public String longestPalindrome3333(String s) {
+        if(s == null || s.isEmpty()) return s;
+        String max = Character.toString(s.charAt(0));
+        for (int i = 0; i < s.length(); i++) {
+            int j = s.length() - 1;
+            while (i < j) {
+                if (isPalindrome(s, i, j))
+                    max = max.length() <= j - i ? s.substring(i, j + 1) : max;
+
+                j--;
+            }
+        }
+
+        return max;
     }
 }
