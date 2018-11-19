@@ -51,7 +51,7 @@ public class Solution {
 
 
     // My solution with memoization
-    // Time ?,  Space O(N^2)
+    // Time O(N^2)  not sure?  N on each recursion * 2N,  Space O(N^2)
     public String longestPalindrome2222(String s) {
         if(s == null || s.isEmpty()) return s;
         String[][] dp = new String[s.length()][s.length()];
