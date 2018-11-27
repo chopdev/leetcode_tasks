@@ -75,6 +75,8 @@ public class Solution {
     }
 
 
+    // Good solution! Not mine
+    // https://leetcode.com/problems/network-delay-time/solution/
     public int networkDelayTime2222(int[][] times, int N, int K) {
         HashMap<Integer, List<int[]>> graph = new HashMap<>();
 
@@ -93,13 +95,15 @@ public class Solution {
             int[] nodeWeight = heap.poll();
             int currNode = nodeWeight[0];
             int distToCurr = nodeWeight[1];
-            if(nodeToDist.containsKey(currNode)) continue;
+            if(nodeToDist.containsKey(currNode)) continue;  // in heap could be processed nodes, because we didn' remove them
             nodeToDist.put(currNode, distToCurr);
 
             for(int[] targetAndWeight : graph.get(currNode)) {
                 int target = targetAndWeight[0];
                 int dist = targetAndWeight[1];
 
+                // here we could add more then one records with the same target,
+                // thats why we need to check of target is processed
                 if(!nodeToDist.containsKey(target))
                     heap.add(new int[] {target, dist + distToCurr});
             }
