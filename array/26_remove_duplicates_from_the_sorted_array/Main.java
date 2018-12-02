@@ -1,3 +1,6 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,5 +13,7 @@ public class Main {
         int res0 = sol.removeDuplicates(arr1);
 	    int res1 = sol.removeDuplicates(arr2);
         int res2 = sol.removeDuplicates(arr3);
+
+        PriorityQueue<Integer> q = new PriorityQueue<>(Comparator.reverseOrder());
     }
 }
