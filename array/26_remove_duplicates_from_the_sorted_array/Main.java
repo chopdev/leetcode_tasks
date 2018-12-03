@@ -1,5 +1,4 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Main {
 
@@ -14,6 +13,26 @@ public class Main {
 	    int res1 = sol.removeDuplicates(arr2);
         int res2 = sol.removeDuplicates(arr3);
 
+
+        // tests
         PriorityQueue<Integer> q = new PriorityQueue<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> qq = new PriorityQueue<>();
+        qq.add(10);
+        qq.add(15);
+        qq.add(5);
+        int lol1= qq.peek();
+
+        List<int[]> temp = new ArrayList<>();
+        temp.add(new int[] {1, 12});
+        temp.add(new int[] {2, 10});
+        Collections.sort(temp, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return Integer.compare(o1[1], o2[1]);
+            }
+        });
+
+
+        Character.cha
     }
 }
