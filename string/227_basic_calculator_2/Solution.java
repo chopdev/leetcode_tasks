@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  https://leetcode.com/problems/basic-calculator-ii/description/
  227. Basic Calculator II
@@ -42,26 +45,38 @@ public class Solution {
         int val = 0;
         for (String operand : pluses) {
             if(operand.isEmpty()) continue;
-            val += calculateMult(operand.split("\\*"));
+            val += calculateOther(operand);
         }
         return val;
     }
 
-    int calculateMult(String[] pluses) {
-        int val = 1;
-        for (String operand : pluses) {
-            if(operand.isEmpty()) continue;
-            val *= calculateDivide(operand.split("/"));
-        }
-        return val;
-    }
+    int calculateOther(String expr) {
+        StringBuilder sb = new StringBuilder();
 
-    private int calculateDivide(String[] dev) {
-        int val = Integer.parseInt(dev[0]);
-        for (int i = 1; i < dev.length; i++) {
-            val /= Integer.parseInt(dev[i]);
+        Queue<Character> operations = new LinkedList<>();
+        Queue<String> numbers = new LinkedList<>();
+
+        for (int i = 0; i < expr.length(); i++) {
+            char tmp = expr.charAt(i);
+            if(tmp == '/' || tmp == '*') {
+                operations.add(tmp);
+                numbers.add(sb.toString());
+                sb = new StringBuilder();
+            }
+            else
+                sb.append(tmp);
         }
 
-        return val;
+        numbers.add(sb.toString());
+        int curr = Integer.parseInt(numbers.poll());
+        for(String numb : numbers) {
+            char operation = operations.poll();
+            if(operation == '*')
+                curr *= Integer.parseInt(numb);
+            else
+                curr /= Integer.parseInt(numb);
+        }
+
+        return curr;
     }
 }
