@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  https://leetcode.com/problems/basic-calculator-ii/description/
@@ -30,15 +31,18 @@ import java.util.Queue;
  "3 + 2*2/4 *5 +6 -10/3/3" = 3+5+6-1=13
 * */
 public class Solution {
+
+    // My solution
     public int calculate(String s) {
         StringBuilder expr = new StringBuilder();
+        // remove whitespaces and change - on +- for initial string
         for (int i = 0; i < s.length(); i++) {
             if(s.charAt(i) == ' ') continue;
             if(s.charAt(i) == '-') expr.append("+-");
             else expr.append(s.charAt(i));
         }
         s = expr.toString();
-        return calculatePluses(s.split("\\+"));
+        return calculatePluses(s.split("\\+")); // split by pluses and calculate
     }
 
     int calculatePluses(String[] pluses) {
@@ -78,5 +82,41 @@ public class Solution {
         }
 
         return curr;
+    }
+
+
+
+    // Not mine solution
+    // https://leetcode.com/problems/basic-calculator-ii/discuss/63003/Share-my-java-solution
+    public int calculate2222(String s) {
+        Stack<Integer> operands = new Stack<>(); // stack with operands we need to add
+        int currNumb = 0;
+        char sign = '+';
+        for (int i = 0; i < s.length(); i++) {
+            char currChar = s.charAt(i);
+            if(Character.isDigit(currChar)) {
+                currNumb = currNumb * 10 + currChar - '0';
+            }
+            else if(currChar != ' ') {
+                doOperation(operands, sign, currNumb);
+                sign = currChar;  // remembering current sign
+                currNumb = 0;  // clear current number
+            }
+        }
+
+        doOperation(operands, sign, currNumb);
+        int res = 0;
+        for(int n: operands) res += n;
+
+        return res;
+    }
+
+    private void doOperation(Stack<Integer> operands, char sign, int currNumb) {
+        switch (sign) {
+            case '+': operands.push(currNumb); break;
+            case '-': operands.push(-currNumb); break;
+            case '*': operands.push(operands.pop() * currNumb); break;
+            case '/': operands.push(operands.pop() / currNumb); break;
+        }
     }
 }
