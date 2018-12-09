@@ -43,7 +43,8 @@ public class Solution {
 
         // Finding lowest element
         // Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
-        // Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
+        // Proof by contradiction that mid < hi:
+        // suppose that mid==hi, then from this formula mid = (lo+hi) /2; -> lo==hi and loop would have been terminated.
         while (lo < hi) {
             mid = (lo+hi) /2;
             if(nums[mid] > nums[hi]) lo = mid + 1;
