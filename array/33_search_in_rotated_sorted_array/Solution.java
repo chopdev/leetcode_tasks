@@ -26,25 +26,38 @@ import java.util.Arrays;
 * */
 public class Solution {
 
-    // My O(lonN) solution
+    // My good O(lonN) solution
+    // examples
+    // 7, 0, 1, 2, 4, 5, 6
+    // 2, 4, 5, 6, 7, 0, 1
+    // My idea is to find the lowest element of rotated array
+    // Where is it? if mid value < last value of array, than in the left side of array
+    // if mid > last value, than lowest element is on the right side
+    // After finding of the lowest element we could understand in which part of array to seek
+    // after lowest element or before
     public int search(int[] nums, int target) {
         if(nums == null || nums.length == 0) return -1;
         if(nums.length == 1) return nums[0] == target ? 0 : -1;
 
         int lo = 0, hi = nums.length - 1, mid = 0;
+
+        // Finding lowest element
+        // Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
+        // Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
         while (lo < hi) {
             mid = (lo+hi) /2;
-            if(nums[mid] > nums[hi])
-                lo = mid + 1;
+            if(nums[mid] > nums[hi]) lo = mid + 1;
             else hi = mid;
         }
 
         int res = -1;
-        if(target <= nums[nums.length - 1])
+        if(target <= nums[nums.length - 1]) // target is less than maximum in the right side
             res = Arrays.binarySearch(nums, lo, nums.length, target);
-        else if (lo > 0)
+        else if (lo > 0) // lo is bigger than 0, so there is left side
             res = Arrays.binarySearch(nums, 0, lo, target);
 
         return res < 0 ? -1 : res;
     }
+
+
 }
