@@ -32,7 +32,11 @@
 
 
  IMPORTANT:
- COuld we have 0 price or negative?
+ Could we have 0 price or negative?
+ Could we sell and buy the stock for with the same price? (sell -> make profit -> than buy)?
+
+ SOLUTION
+ https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
 * */
 public class Solution {
 
@@ -55,5 +59,35 @@ public class Solution {
 
         int res2 = calculate(curr, profit, prices, ind + 1);
         return Math.max(res1, res2);
+    }
+
+    // not mine O(N) time
+    // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
+    public int maxProfit2222(int[] prices) {
+        int i = 0;
+        int valley = prices[0];
+        int peak = prices[0];
+        int maxprofit = 0;
+        while (i < prices.length - 1) {
+            while (i < prices.length - 1 && prices[i] >= prices[i + 1])  // go down until we find a valley
+                i++;
+            valley = prices[i];
+            while (i < prices.length - 1 && prices[i] <= prices[i + 1])  // go up until we find peak
+                i++;
+            peak = prices[i];
+            maxprofit += peak - valley;
+        }
+        return maxprofit;
+    }
+
+    // not mine O(N) time
+    // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
+    public int maxProfit3333(int[] prices) {
+        int maxprofit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                maxprofit += prices[i] - prices[i - 1];  // we buy and sell only on the rise of the graph
+        }
+        return maxprofit;
     }
 }
