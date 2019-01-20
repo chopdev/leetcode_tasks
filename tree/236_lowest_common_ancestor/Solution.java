@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
 /*
@@ -35,6 +37,8 @@ QUESTIONS:
 2) What if one ore two values are missing?
 3) where we allow a node to be a descendant of itself - means that we can return node p or q if one of them is ancestor of another?
 
+SOLUTION
+https://leetcode.com/articles/lowest-common-ancestor-of-a-binary-tree/
 * */
 public class Solution {
 
@@ -71,6 +75,63 @@ public class Solution {
     }
 
 
+    // Not mine recursive solution
+    // https://leetcode.com/articles/lowest-common-ancestor-of-a-binary-tree/
+    // Our recursion function returns true if we found p or q node
+    // if on some node we have two true flags, that means that this node is the LCA
+    private  TreeNode result;
+    public TreeNode lowestCommonAncestor2222(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || p == null || q == null) return null;
+        preOrder(root, p, q);
+        return result;
+    }
+
+    private boolean preOrder(TreeNode node, TreeNode p, TreeNode q) {
+        if(node == null) return false;
+
+        int foundCurrent = node == p || node == q ? 1 : 0;
+        int foundInLeft = preOrder(node.left, p, q) ? 1 : 0;
+        int foundInRight = preOrder(node.right, p, q) ? 1 : 0;
+
+        if(foundCurrent + foundInLeft + foundInRight == 2) result = node;
+        return foundCurrent + foundInLeft + foundInRight > 0;
+    }
 
 
+
+    // Not mine iterative 
+    public TreeNode lowestCommonAncestor3333(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || p == null || q == null) return null;
+
+        HashMap<TreeNode, TreeNode> parents = new HashMap<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        parents.put(root, null);
+
+        while (!parents.containsKey(p) || !parents.containsKey(q)) {
+            TreeNode curr = stack.pop();
+
+            if(curr.left != null) {
+                parents.put(curr.left, curr);
+                stack.push(curr.left);
+            }
+
+            if(curr.right != null) {
+                parents.put(curr.right, curr);
+                stack.push(curr.right);
+            }
+        }
+
+        HashSet<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parents.get(p);
+        }
+
+        while (!ancestors.contains(q)) {
+            q = parents.get(q);
+        }
+
+        return q;
+    }
 }

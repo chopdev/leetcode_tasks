@@ -29,7 +29,9 @@ public class Main {
 
         t4.left = t18;
 
-        TreeNode res1 = sol.lowestCommonAncestor(root, t5, t1);  // 3
-        TreeNode res2 = sol.lowestCommonAncestor(root, t5, t4); // 5
+        TreeNode res1 = sol.lowestCommonAncestor3333(root, t5, t1);  // 3
+        TreeNode res2 = sol.lowestCommonAncestor3333(root, t5, t4); // 5
+
+
     }
 }
