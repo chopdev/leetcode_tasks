@@ -9,7 +9,7 @@ public class Main {
         arr1[2] = new char[]{'1', '0', '1'};
 
         Solution solution1 = new Solution();
-        int countss = solution1.numIslands(arr1);
+        int countss = solution1.numIslands2222(arr1);
 
 
 	    char[][] arr = new char[4][];
@@ -20,6 +20,6 @@ public class Main {
         arr[3] = new char[] {'0', '0','0','0','0'};
 
         Solution sol = new Solution();
-        int count1 = sol.numIslands(arr);
+        int count1 = sol.numIslands2222(arr);
     }
 }

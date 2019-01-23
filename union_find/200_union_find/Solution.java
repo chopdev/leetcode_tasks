@@ -1,5 +1,3 @@
-import java.lang.reflect.Field;
-
 public class Solution {
 
     // My bad partially working solution
@@ -52,5 +50,37 @@ public class Solution {
 
         field[i][j] = secondParent;
         return --size;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    // Not mine solution https://leetcode.com/problems/number-of-islands/discuss/56359/Very-concise-Java-AC-solution
+    // TIme complexity O(N*M) - N  number of rows, M - number of columns
+    // Why? In the worst case we would have grid with ones. We would go through each cell using recursion on the
+    // first step of the loop. Then we will do constant operation for other steps of the loop, so O(N*M + N*M)
+    // Space O(N*M) - deepness of recursion
+    public int numIslands2222(char[][] grid) {
+        int size = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if(grid[i][j] == '1') {
+                    size ++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return size;
+    }
+
+    private void dfs(char[][] grid, int i, int j) {
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') return;
+
+        grid[i][j] = '0';
+        dfs(grid, i + 1, j);
+        dfs(grid, i - 1, j);
+        dfs(grid, i, j + 1);
+        dfs(grid, i, j - 1);
     }
 }
