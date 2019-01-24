@@ -1,61 +1,5 @@
 public class Solution {
-
-    // My bad partially working solution
-    // idea is taken from Sedgewick book (Fundamentals chapter -> Union Find)
-    // Firstly, each '1' is a separate island
-    // Then we combine all adjacent ones into one island
-    public int numIslands(char[][] grid) {
-        Point[][] field = new Point[grid.length][grid[0].length];
-        int islandsCount = 0;
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if(grid[i][j] == '1') {
-                    field[i][j] = new Point(i, j);
-                    islandsCount ++;
-                }
-            }
-        }
-
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                if(i + 1 < field.length && field[i][j] != null && field[i+1][j] != null)
-                    islandsCount = union(field, islandsCount, i, j, i +1, j);
-                if(j + 1 < field[i].length && field[i][j] != null && field[i][j+1] != null)
-                    islandsCount = union(field, islandsCount, i, j, i, j + 1);
-            }
-        }
-
-        return islandsCount;
-    }
-
-    // returns component (island) to which this point is related
-    private Point find(Point[][] field, int i, int j) {
-        while (field[i][j].i != i && field[i][j].j != j) {
-            Point curr = field[i][j];
-            i = curr.i;
-            j = curr.j;
-        }
-
-        return field[i][j];
-    }
-
-    // union two points in one component
-    // returns current count of islands
-    private int union(Point[][] field, int size, int i, int j, int k, int m) {
-        Point firstParent = find(field, i, j);
-        Point secondParent = find(field, k, m);
-
-        if(firstParent == secondParent) return size;
-
-        field[i][j] = secondParent;
-        return --size;
-    }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+    
     // Not mine solution https://leetcode.com/problems/number-of-islands/discuss/56359/Very-concise-Java-AC-solution
     // TIme complexity O(N*M) - N  number of rows, M - number of columns
     // Why? In the worst case we would have grid with ones. We would go through each cell using recursion on the
@@ -82,5 +26,31 @@ public class Solution {
         dfs(grid, i - 1, j);
         dfs(grid, i, j + 1);
         dfs(grid, i, j - 1);
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Not mine solution
+    // https://leetcode.com/problems/number-of-islands/discuss/56354/1D-Union-Find-Java-solution-easily-generalized-to-other-problems
+    // idea is taken from Sedgewick book (Fundamentals chapter -> Union Find)
+    // Firstly, each '1' is a separate island
+    // Then we combine all adjacent ones into one island
+    public int numIslands(char[][] grid) {
+        if(grid == null || grid.length == 0) return 0;
+        UnionFind uf = new UnionFind(grid);
+        int rowLenght = grid[0].length;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if(grid[i][j] == '1') {
+                    int id = i*rowLenght + j;
+                    if(i + 1 < grid.length && grid[i+1][j] == '1')
+                        uf.union(id, (i+1) * rowLenght + j);
+                    if(j + 1 < grid[i].length && grid[i][j+1] == '1')
+                        uf.union(id, i * rowLenght + j + 1);
+                }
+            }
+        }
+        return uf.size;
     }
 }
