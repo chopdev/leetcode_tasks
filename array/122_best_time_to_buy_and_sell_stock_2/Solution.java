@@ -35,6 +35,9 @@
  Could we have 0 price or negative?
  Could we sell and buy the stock for with the same price? (sell -> make profit -> than buy)?
 
+ HINT 
+ Imagine it as a graph. 
+ 
  SOLUTION
  https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
 * */
