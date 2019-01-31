@@ -17,6 +17,7 @@ import java.util.HashSet;
  62 + 82 = 100
  12 + 02 + 02 = 1
 
+ https://en.wikipedia.org/wiki/Happy_number
  */
 public class Solution {
     // My solution
