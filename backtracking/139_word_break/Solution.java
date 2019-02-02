@@ -89,4 +89,49 @@ public class Solution {
         }
         return false;
     }
+	
+	
+	
+	
+	// Not mine solution
+	// https://leetcode.com/problems/word-break/discuss/44054/Java-DP-solution 
+	public boolean wordBreak(String s, Set<String> dict) {
+	  if (s == null || s.length() == 0) return false;
+	  
+	  int n = s.length();
+	  
+	  // dp[i] represents whether s[0...i] can be formed by dict
+	  boolean[] dp = new boolean[n];
+	  
+	  for (int i = 0; i < n; i++) {
+		for (int j = 0; j <= i; j++) {
+		  String sub = s.substring(j, i + 1);
+		  
+		  if (dict.contains(sub) && (j == 0 || dp[j - 1])) {
+			dp[i] = true;
+			break;
+		  }
+		}
+	  }
+	  
+	  return dp[n - 1];
+	}
+	
+	// Not mine solution
+	// https://leetcode.com/problems/word-break/discuss/43790/Java-implementation-using-DP-in-two-ways
+	public boolean wordBreak(String s, Set<String> dict) {
+        boolean[] f = new boolean[s.length() + 1];        
+        f[0] = true;
+
+        for(int i=1; i <= s.length(); i++){
+            for(int j=0; j < i; j++){
+                if(f[j] && dict.contains(s.substring(j, i))){
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return f[s.length()];
+    }
 }
