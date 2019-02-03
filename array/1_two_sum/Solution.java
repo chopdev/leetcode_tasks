@@ -16,19 +16,29 @@ import java.util.logging.Handler;
  Because nums[0] + nums[1] = 2 + 7 = 9,
  return [0, 1].
 
+
+ SOLUTION
+ https://leetcode.com/articles/two-sum/
+ 
+ WHAT to ask:
+ 1) could we have duplicate numbers, negative numbers?
+ 2) you may not use the same element twice!
 * */
 public class Solution {
+
+    // Mine solution
+    // O(N) time and space
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
-        for (int n : nums)
-            hashMap.put(target - n, hashMap.getOrDefault(target - n, 0) + 1);
-
-        for (int n : nums) {
-            if(!hashMap.containsKey(n)) continue;
-            int count = hashMap.get(n);
-            if(count == 1 && n == target / 2) continue;
-            return
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int[] res = new int[2];
+        for(int i=0; i<nums.length; i++) {
+            if(map.containsKey(nums[i])) {
+                res[0] = map.get(nums[i]);
+                res[1] = i;
+                return res;
+            }
+            map.put(target - nums[i], i);
         }
-
-     }
+        return res;
+    }
 }
