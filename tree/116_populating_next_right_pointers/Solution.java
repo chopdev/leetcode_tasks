@@ -58,4 +58,35 @@ public class Solution {
         traverse(curr.right, right == null ? null : right.left);
         traverse(curr.left, curr.right);
     }
+
+    // Not mine solution
+    // here we reuse next pointer for childs
+    public void connect2222(TreeLinkNode root) {
+        if(root == null)
+            return;
+
+        if(root.left != null){
+            root.left.next = root.right;
+            if(root.next != null)
+                root.right.next = root.next.left;
+        }
+
+        connect(root.left);
+        connect(root.right);
+    }
+
+    // Not mine iterative solution
+    public void connect3333(TreeLinkNode root) {
+        TreeLinkNode level_start=root; // memorize start of the level (the most left node of level)
+        while(level_start!=null){
+            TreeLinkNode cur=level_start;
+            while(cur!=null){ // set values for childs and move curr pointer one step right from the most left pointer
+                if(cur.left!=null) cur.left.next=cur.right;
+                if(cur.right!=null && cur.next!=null) cur.right.next=cur.next.left;
+
+                cur=cur.next;
+            }
+            level_start=level_start.left; // set next level_start
+        }
+    }
 }
