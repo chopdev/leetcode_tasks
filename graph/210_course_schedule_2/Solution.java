@@ -68,14 +68,12 @@ public class Solution {
                         List<Integer> res,
                         HashSet<Integer> visiting,
                         HashSet<Integer> visited) {
-        if(visited.size() == graph.size()) return true;
         if(visiting.contains(curr)) return false;
-
         visiting.add(curr);
 
         for(int child : graph.get(curr)) {
             if(!visited.contains(child))
-                dfs(child, graph, res, visiting, visited);
+                if(!dfs(child, graph, res, visiting, visited)) return false;
         }
 
         visiting.remove(curr);

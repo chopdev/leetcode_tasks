@@ -14,5 +14,12 @@ public class Main {
 
 
         int[] res2 = sol.findOrder(2, new int[0][]);
+
+
+        int[][] tt = new int[2][];
+        tt[0] = new int[] {1, 0};
+        tt[1] = new int[] {0, 1};
+
+        int[] res3 = sol.findOrder(2, tt);
     }
 }
