@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  684. Redundant Connection
@@ -45,6 +46,7 @@ public class Solution {
     // IMPORTANT: for undirected graph we also pass parent, because vertices are connected both ways
     public int[] findRedundantConnection(int[][] edges) {
         if(edges == null || edges.length == 0) return null;
+        // create graph
         HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>();
         for (int[] pair : edges) {
             if(!graph.containsKey(pair[0])) graph.put(pair[0], new ArrayList<>());
@@ -54,10 +56,12 @@ public class Solution {
             graph.get(pair[1]).add(pair[0]);
         }
 
+        // find nodes that are in loop
         HashSet<Integer> result = new HashSet<>();
         int[] lastPair = null;
         dfs(graph, edges[0][0],edges[0][0], new HashSet<>(), new HashSet<>(), result);
 
+        // look for last edge with nodes in a loop
         for(int[] edge : edges) {
             if(result.contains(edge[0]) && result.contains(edge[1])) {
                 lastPair = edge;
@@ -69,7 +73,7 @@ public class Solution {
 
     private Integer dfs(HashMap<Integer, ArrayList<Integer>> graph,
                         int curr,
-                        int parent,
+                        int parent,  // important for undirected graph
                         HashSet<Integer> visiting,
                         HashSet<Integer> visited,
                         HashSet<Integer> result) {
@@ -99,5 +103,65 @@ public class Solution {
         visited.add(curr);
         visiting.remove(curr);
         return null;
+    }
+
+
+    // Not mine solution using Union find
+    // https://leetcode.com/problems/redundant-connection/discuss/123819/Union-Find-with-Explanations-(Java-Python)
+    // Given edges [1, 2], [1, 3], [2, 3].
+    // Initially, there are 3 disjoint sets: 1, 2, 3.
+    //Edge [1,2] connects 1 to 2, i.e., 1 and 2 are winthin the same connected component.
+    //Edge [1,3] connects 1 to 3, i.e., 1 and 3 are winthin the same connected component.
+    //Edge [2,3] connects 2 to 3, but 2 and 3 have been winthin the same connected component already, so [2, 3] is redundant.
+    public int[] findRedundantConnection2222(int[][] edges) {
+        DisjointSet disjointSet = new DisjointSet(edges.length);
+
+        for (int[] edge : edges) {
+            if (!disjointSet.union(edge[0] - 1, edge[1] - 1)) return edge;
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+
+    // Not mine DFS approach
+    // https://leetcode.com/problems/redundant-connection/discuss/163973/dfs-and-union-find
+    // They go edge by edge and do dfs
+    public int[] findRedundantConnection3333(int[][] edges) {
+        List<List<Integer>> adjList = new ArrayList<>();
+        for(int i = 0; i < edges.length + 1; i++){
+            adjList.add(new ArrayList<>());
+        }
+        for(int[] edge : edges){
+            int v = edge[0];
+            int u = edge[1];
+
+            HashSet<Integer> visited = new HashSet<>();
+
+            if(dfs(visited, u, v, adjList)){ // return true if there's a path between u and v already
+                // connect u and v directly make it a graph from tree
+                return edge;
+            }
+            // if the path doesnt exist
+
+            adjList.get(u).add(v);
+            adjList.get(v).add(u);
+        }
+        return null;
+    }
+    private boolean dfs(HashSet<Integer> visited, int currNode, int searchNode, List<List<Integer>> adjList){
+        // base case , when u and v are the same pos
+        if(currNode == searchNode) return true;
+
+        // else, mark u as visited
+        visited.add(currNode);
+
+
+        // check every nei, dfs on nei
+        for(int nei : adjList.get(currNode)){
+            if(visited.contains(nei)) continue;
+            if(dfs(visited, nei, searchNode, adjList)) return true;
+        }
+        return false;
     }
 }
