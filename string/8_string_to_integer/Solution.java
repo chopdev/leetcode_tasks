@@ -1,4 +1,7 @@
 public class Solution {
+
+    // My solution
+    // but not works for "-00007" = -7
     public int myAtoi2222(String str) {
         int begin = 0, end = 0, sign = 1;
         for(begin = 0; begin <str.length(); begin++) {
