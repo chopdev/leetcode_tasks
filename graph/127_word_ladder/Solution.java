@@ -44,6 +44,10 @@ https://leetcode.com/problems/word-ladder/
 
 * */
 public class Solution {
+
+    // My solution
+    // But I used DFS here, which is not suitable for closest path finding
+    // Anyway Idea with using of graph was good here
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         int endInd = -1;
         for (int i = 0; i < wordList.size(); i++)
@@ -65,28 +69,23 @@ public class Solution {
             }
         }
 
-        ArrayList<Integer> res = new ArrayList<>();
-        if(!dfs(wordList.size() - 1, graph, endInd, new HashSet<>(), res)) return 0;
-
-        return res.size() - 1;
+        return dfs(wordList.size() - 1, graph, endInd, new HashSet<>());
     }
 
-    boolean dfs(int currInd, ArrayList<Integer>[] graph, int destInd, HashSet<Integer> visited, List<Integer> res) {
+    int dfs(int currInd, ArrayList<Integer>[] graph, int destInd, HashSet<Integer> visited) {
         if(currInd == destInd) {
-            res.add(currInd);
-            return true;
+            return 1;
         }
         visited.add(currInd);
-
+        int min = Integer.MAX_VALUE;
         for (int child : graph[currInd]) {
             if(!visited.contains(child)) {
-                if(dfs(child, graph, destInd, visited, res)) {
-                    res.add(currInd);
-                    return true;
-                }
+                min = Math.min(dfs(child, graph, destInd, visited) + 1, min);
             }
         }
-        return false;
+
+        visited.remove(currInd);
+        return min == Integer.MAX_VALUE ? 0 : min;
     }
 
     private boolean similar(String s1, String s2) {

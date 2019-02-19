@@ -11,5 +11,10 @@ public class Main {
 
         Solution solution = new Solution();
         int res = solution.ladderLength("hit", "cog", wordsList);
+
+
+        String[] words2 = new String[]{"a", "b", "c"};
+        List<String> wordsList2 = new ArrayList<>(Arrays.asList(words2));
+        int res2 = solution.ladderLength("a", "c", wordsList2);
     }
 }
