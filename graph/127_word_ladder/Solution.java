@@ -39,6 +39,10 @@ https://leetcode.com/problems/word-ladder/
 
  Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 
+ SOLUTION
+ article is not the best here, but gives some basic understanding
+ https://leetcode.com/articles/word-ladder/
+ 
 * */
 public class Solution {
 
@@ -155,7 +159,9 @@ public class Solution {
         return 0;
     }
 
-    // Mine interpretation of upper solution, but bidirectional BFS
+    // Mine interpretation of upper solution, but bidirectional BFS. With MISTAKE
+    // For calculation of number of levels here I use null that is pushed in a Q after each BFS level
+    // It's not correctly working, some mistake here
     public int ladderLength3333(String start, String end, List<String> wordList) {
         Set<String> dict = new HashSet<>(wordList);
         if(!dict.contains(end)) return 0;
@@ -207,6 +213,60 @@ public class Solution {
                     if(dict.contains(modified) && !currVisited.contains(modified)) {
                         currQ.add(modified);
                         currVisited.add(modified);
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    // My interpretation of solution, but bidirectional BFS - WORKING
+    // For calculations of levels count here I use HashMap
+    // https://leetcode.com/problems/word-ladder/discuss/40717/Another-accepted-Java-solution-(BFS)
+    // https://leetcode.com/articles/word-ladder/
+    public int ladderLength4444(String start, String end, List<String> wordList) {
+        Set<String> dict = new HashSet<>(wordList);
+        if(!dict.contains(end)) return 0;
+
+        Queue<String> qStart = new LinkedList<>();
+        qStart.add(start);
+        Queue<String> qEnd = new LinkedList<>();
+        qEnd.add(end);
+
+        HashMap<String, Integer> startVisited = new HashMap<>();
+        startVisited.put(start, 1);
+        HashMap<String, Integer> endVisited = new HashMap<>();
+        endVisited.put(end, 1);
+
+        Queue<String> currQ = qStart;
+        HashMap<String, Integer> currVisited = startVisited;
+        HashMap<String, Integer> otherVisited = startVisited;
+
+        while (!qStart.isEmpty() && !qEnd.isEmpty()) {
+            if(qStart.size() > qEnd.size()) {
+                currQ = qEnd;
+                currVisited = endVisited;
+                otherVisited = startVisited;
+            }else {
+                currQ = qStart;
+                currVisited = startVisited;
+                otherVisited = endVisited;
+            }
+
+            String str = currQ.poll();
+            for (int i = 0; i < str.length(); i++) {
+                char[] letters = str.toCharArray();
+
+                for (char j = 'a'; j <= 'z'; j++) {
+                    letters[i] = j;
+                    String modified = String.valueOf(letters);
+                    if(otherVisited.containsKey(modified)) return currVisited.get(str) + otherVisited.get(modified);
+
+                    if(dict.contains(modified) && !currVisited.containsKey(modified)) {
+                        currQ.add(modified);
+                        int currtLevel = currVisited.get(str);
+                        currVisited.put(modified, currtLevel + 1);
                     }
                 }
             }
