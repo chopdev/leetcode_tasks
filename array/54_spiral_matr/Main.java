@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -9,6 +11,6 @@ public class Main {
         arr[4] = new int[] {17, 18, 19, 20};
 
         Solution solution = new Solution();
-        solution.spiralOrder(arr);
+        List<Integer> res = solution.spiralOrder(arr);
     }
 }

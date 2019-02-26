@@ -47,6 +47,11 @@ public class Solution {
         }
     }
 
+    /*
+    My solution
+    O(N^2) time and space (because of recursion depth)
+    Idea is to do dfs, but we need to preserve direction that we used to move before
+    * */
     public List<Integer> spiralOrder(int[][] matrix) {
         if(matrix == null || matrix.length == 0) return new ArrayList<Integer>();
 
@@ -57,24 +62,21 @@ public class Solution {
         return res;
     }
 
-    private void dfs(int[][] matrix, int row, int col, int direction, List<Integer> res, HashSet<Integer> visited) {
-        if(res.size() == rowCount * colCount) return;
-        while (!(row < 0 || col < 0 || row >= rowCount || col >= colCount)) {
-            int id = colCount * row + col;
-            if(visited.contains(id)) break;
+    private boolean dfs(int[][] matrix, int row, int col, int direction, List<Integer> res, HashSet<Integer> visited) {
+        if(row < 0 || col < 0 || row >= rowCount || col >= colCount) return false;
+        int id = colCount * row + col;
+        if(visited.contains(id)) return false;
 
-            visited.add(id);
-            res.add(matrix[row][col]);
+        visited.add(id);
+        res.add(matrix[row][col]);
+        if(res.size() == colCount * rowCount) return true;
 
-            row += moves[direction].row;
-            col += moves[direction].col;
+        for (int i = 0; i < moves.length; i++) {
+            if(dfs(matrix, row + moves[direction].row, col + moves[direction].col, direction, res, visited)) return true;
+            direction++;
+            if(direction >= moves.length) direction=0;
         }
-        // one step back
-        row -= moves[direction].row;
-        col -= moves[direction].col;
 
-        direction++;
-        if(direction >= moves.length) direction = 0;
-        dfs(matrix, row, col, direction, res, visited);
+        return false;
     }
 }
