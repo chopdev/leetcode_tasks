@@ -60,6 +60,7 @@ public class Solution {
     {
         if(n < 0 || m < 0)
             return 0;
+        if(memo[n][m] != 0) return memo[n][m];
 
         if(s1.charAt(n) == s2.charAt(m))
             memo[n][m] = 1 + LCS3333(s1, s2, n - 1, m - 1, memo);
