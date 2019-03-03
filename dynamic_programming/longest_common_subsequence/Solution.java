@@ -21,7 +21,7 @@ public class Solution {
 
     // Without caching, it is overlapping problem
     // runtime O(2^max(n, m)))
-    public int LCS2(String s1, String s2)
+    public int LCS2222(String s1, String s2)
     {
         if(s1 == null || s2 == null)
             return 0;
@@ -29,18 +29,44 @@ public class Solution {
         int n = s1.length() - 1;
         int m = s2.length() - 1;
 
-        return LCS2(s1, s2, n, m);
+        return LCS2222(s1, s2, n, m);
     }
 
-    public int LCS2(String s1, String s2, int n, int m)
+    public int LCS2222(String s1, String s2, int n, int m)
     {
         if(n < 0 || m < 0)
             return 0;
 
         if(s1.charAt(n) == s2.charAt(m))
-            return  1 + LCS2(s1, s2, n - 1, m - 1);
+            return  1 + LCS2222(s1, s2, n - 1, m - 1);
 
-        return Math.max(LCS2(s1, s2, n-1, m), LCS2(s1, s2, n, m-1));
+        return Math.max(LCS2222(s1, s2, n-1, m), LCS2222(s1, s2, n, m-1));
+    }
+
+    // Top down solution with memoization
+    // O(N*M) complexity
+    public int LCS3333(String s1, String s2)
+    {
+        if(s1 == null || s2 == null)
+            return 0;
+
+        int n = s1.length() - 1;
+        int m = s2.length() - 1;
+        int[][] memo = new int[s1.length()][s2.length()];
+        return LCS3333(s1, s2, n, m, memo);
+    }
+
+    public int LCS3333(String s1, String s2, int n, int m, int[][] memo)
+    {
+        if(n < 0 || m < 0)
+            return 0;
+
+        if(s1.charAt(n) == s2.charAt(m))
+            memo[n][m] = 1 + LCS3333(s1, s2, n - 1, m - 1, memo);
+        else
+            memo[n][m] = Math.max(LCS3333(s1, s2, n-1, m, memo), LCS3333(s1, s2, n, m-1, memo));
+
+        return memo[n][m];
     }
 
     // With dynamic programming
