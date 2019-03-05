@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -70,22 +72,22 @@ public class Solution2 {
     private int[] colSide = new int[] {1, 0, 0, -1};
 
     // My BFS solution
-    // IMPORTANT: need to add hashcode override for Point class
+    // Use Pair (Tuple) class in order to preserve rowInd and colInd  
     public int shortestPath2222(int[][] arr) {
         int rowsCount = arr.length;
         int colCount = arr[0].length;
-        Queue<Point> queue = new LinkedList<>();
-        queue.offer(new Point(0, 0));
-        HashMap<Point, Integer> dist = new HashMap<>();
-        dist.put(new Point(0, 0), 0);
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair(0, 0));
+        HashMap<Pair<Integer, Integer>, Integer> dist = new HashMap<>();
+        dist.put(new Pair(0, 0), 1);
 
         while (!queue.isEmpty()) {
-            Point curr = queue.poll();
+            Pair<Integer, Integer> curr = queue.poll();
 
             for (int i = 0; i < 4; i++) {
-                int nextRow = curr.row + rowSide[i];
-                int nextCol = curr.col + colSide[i];
-                Point next = new Point(nextRow, nextCol);
+                int nextRow = curr.getKey() + rowSide[i];
+                int nextCol = curr.getValue() + colSide[i];
+                Pair<Integer, Integer> next = new Pair(nextRow, nextCol);
                 if(isValid(rowsCount, colCount, nextRow, nextCol) && !dist.containsKey(next)) {
                     if(arr[nextRow][nextCol] == 0) continue; // obstacle
                     if(arr[nextRow][nextCol] == 9) return dist.get(curr) + 1;
