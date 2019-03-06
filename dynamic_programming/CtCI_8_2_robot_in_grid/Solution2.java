@@ -72,7 +72,7 @@ public class Solution2 {
     private int[] colSide = new int[] {1, 0, 0, -1};
 
     // My BFS solution
-    // Use Pair (Tuple) class in order to preserve rowInd and colInd  
+    // Use Pair (Tuple) class in order to preserve rowInd and colInd
     public int shortestPath2222(int[][] arr) {
         int rowsCount = arr.length;
         int colCount = arr[0].length;
