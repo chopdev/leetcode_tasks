@@ -25,6 +25,9 @@ https://leetcode.com/problems/partition-labels/
 
 * */
 public class Solution {
+    // My solution
+    // O(N) time, O(1) memory (collections will take no more than 26 elements)
+    // I use a hashmap to check if the rest of the string do not contains elements of current substring
     public List<Integer> partitionLabels(String S) {
         HashMap<Character, Integer> charsToCount = new HashMap<>();
         for(char ch : S.toCharArray()) {
@@ -49,5 +52,33 @@ public class Solution {
         }
 
         return res;
+    }
+
+
+    // Not mine solution
+    // O(N) time, O(1) memory (collections will take no more than 26 elements)
+    // we remember the last position of each character
+    // then as we go we try to get to last character of current substring
+    public List<Integer> partitionLabels2222(String S) {
+        if(S == null || S.length() == 0){
+            return null;
+        }
+        List<Integer> list = new ArrayList<>();
+        int[] map = new int[26];  // record the last index of the each char
+
+        for(int i = 0; i < S.length(); i++){
+            map[S.charAt(i)-'a'] = i;
+        }
+        // record the end index of the current sub string
+        int last = 0;
+        int start = 0;
+        for(int i = 0; i < S.length(); i++){
+            last = Math.max(last, map[S.charAt(i)-'a']);
+            if(last == i){
+                list.add(last - start + 1);
+                start = last + 1;
+            }
+        }
+        return list;
     }
 }
