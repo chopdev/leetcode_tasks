@@ -37,7 +37,7 @@ public class Solution {
     // O(N) time
     // Read Note more attentively - all numbers are [-10000, 10000]
     // Idea is to count each number (like in counting sort)
-    // then go through counts and pick only odds 
+    // then go through counts and pick only odds
     public int arrayPairSum2222(int[] nums) {
         int[] exist = new int[20001];
         for (int i = 0; i < nums.length; i++) {
