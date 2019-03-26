@@ -62,18 +62,18 @@ public class Solution {
         if(nums == null || nums.length == 0) return new int[0];
         int[] res = new int[nums.length - k + 1];
         int ind = 0;
-        Deque<Integer> deque = new ArrayDeque<>();
+        Deque<Integer> deque = new ArrayDeque<>();  // use deque to remember indexes of current window max elements
         for (int i = 0; i < nums.length; i++) {
 
-            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1)
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1)  // remove indexes that are out of the window
                 deque.pollFirst();
 
-            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i])
+            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) // remove smaller elements from the end
                 deque.pollLast();
 
-            deque.offerLast(i);
+            deque.offerLast(i);  // add to the end, the element with the biggest value is at the beginning
             if(i >= k - 1)
-                res[ind++] = nums[deque.peekFirst()];
+                res[ind++] = nums[deque.peekFirst()];  // put the biggest element of the window
         }
 
         return res;
