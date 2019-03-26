@@ -91,7 +91,7 @@ public class Solution {
     }
 
     private int numDecodings3333(String s, int ind, int[] memo) {
-        if(ind >= s.length()) return 1;
+        if(ind >= s.length()) return 1;  // we reach the end, so we have one combination
         if(s.charAt(ind) == '0') return 0; // we can't start from 0 so it is not a right combination
         if(memo[ind] > -1) return memo[ind];
 
