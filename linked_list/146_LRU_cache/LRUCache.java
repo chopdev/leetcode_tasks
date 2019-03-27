@@ -38,7 +38,7 @@ import java.util.LinkedList;
 public class LRUCache {
 
     HashMap<Integer, Integer> keyValue;
-    LinkedList<Integer> keysList;
+    LinkedList<Integer> keysList;  // first items have bigger priority
     int capacity;
 
     public LRUCache(int capacity) {

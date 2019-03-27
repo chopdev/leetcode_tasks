@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        LRUCache cache = new LRUCache(2);
+        LRUCache2222 cache = new LRUCache2222(2);
         cache.put(1, 1);
         cache.put(2, 2);
         int res1 = cache.get(1);       // returns 1
@@ -14,7 +14,7 @@ public class Main {
 
 
 
-        cache = new LRUCache(2);
+        cache = new LRUCache2222(2);
         cache.put(1, 1);
         cache.put(2, 2);
         int res6 = cache.get(1);    // 1
@@ -25,5 +25,15 @@ public class Main {
         int res7 =cache.get(1);  // -1
         int res8 =cache.get(3);  // 3
         int res9 =cache.get(4);  // 4
+
+
+
+        cache = new LRUCache2222(1);
+        cache.put(2, 1);
+        int res10 = cache.get(2);    // 1
+        cache.put(3, 2);
+        int res11 = cache.get(2);   // -1
+        int res12 = cache.get(3);  // 2
+
     }
 }
