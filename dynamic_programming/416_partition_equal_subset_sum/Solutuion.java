@@ -82,4 +82,33 @@ public class Solutuion {
 
         return false;
     }
+
+    // O(2^n)
+    public boolean canPartition3333(int[] nums) {
+        if(nums == null)
+            return  false;
+
+        int n = nums.length;
+        int sum = 0;
+        for (int i = 0; i <n; i++) {
+            sum += nums[i];
+        }
+
+        if(sum % 2!= 0)
+            return  false; // if sum can't be divided, we can't partition it on 2 subsets
+
+        // look if we can get half of the sum from initial numbers (if can - other part of numbers is another half)
+        sum = sum / 2;
+
+
+        return false;
+    }
+
+    private boolean sumExists(int[] nums, int i, int currSum, int sum) {
+        if(currSum == sum) return true;
+        if(i >= nums.length || currSum > sum) return false;
+
+        boolean exist = sumExists(nums, i + 1, currSum + nums[i], sum) || sumExists(nums, i + 1, currSum, sum);
+        return exist;
+    }
 }
