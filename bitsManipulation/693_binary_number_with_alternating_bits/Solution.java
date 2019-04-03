@@ -52,6 +52,8 @@ public class Solution {
     }
 
 
+    // Cool solution
+    // https://leetcode.com/problems/binary-number-with-alternating-bits/discuss/113933/Java-super-simple-explanation-with-inline-example
     boolean hasAlternatingBits2222(int n) {
         /*
         n =         1 0 1 0 1 0 1 0
@@ -69,6 +71,7 @@ public class Solution {
 
 
     /*
+    https://leetcode.com/problems/binary-number-with-alternating-bits/discuss/108427/Oneliners-(C%2B%2B-Java-Ruby-Python)
     Xor the number with itself shifted right twice and check whether everything after the leading 1-bit became/stayed 0.
      Xor is 0 iff the bits are equal, so we get 0-bits iff the pair of leading 1-bit and the 0-bit in front of it are
      repeated until the end.
