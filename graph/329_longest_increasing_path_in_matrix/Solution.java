@@ -32,6 +32,11 @@
  * */
 public class Solution {
 
+
+	// Not mine O(N*M) solution
+	// https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/78308/15ms-Concise-Java-Solution
+	// Key point here is that this graph in matrix has no loops, because we connect only nodes when 1 is bigger than other
+	// That's why we can use DFS here + memoization to remember max length at each point
     int[][] sides = { {1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
     public int longestIncreasingPath(int[][] matrix) {
