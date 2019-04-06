@@ -20,7 +20,7 @@ public class Solution {
     public int minDistance(String word1, String word2) {
         if(word1.isEmpty()) return word2.length();
         if(word2.isEmpty()) return word1.length();
-        
+
         int longest = lcs(word1, word2, 0, 0, new int[word1.length()][word2.length()]);
         int res = word1.length() - longest;
         res += word2.length() - longest;
