@@ -18,6 +18,6 @@ public class Main {
 	    arr[1] = second;
 	    arr[2] = third;
 
-	    ListNode res = sol.mergeKLists2222(arr);
+	    ListNode res = sol.mergeKLists3333(arr);
     }
 }

@@ -54,7 +54,9 @@ public class Solution {
 
 
     // Mine solution (didn't figured out to use PriorityQueue from the beginning)
-    // time O(L + C*log(L)) - L - number of lists, C - count of all nodes, logL - for priority queue operations
+    // time O(L + C*log(L))=O(C*log(L)) - L - number of lists, C - count of all nodes, logL - for priority queue operations
+    // C>=L, because even if each list will have one item C==L
+    // Space complexity O(L) - priority Q
     // approach 3 from solutions
     public ListNode mergeKLists2222(ListNode[] lists) {
         if(lists == null || lists.length == 0) return null;
@@ -74,6 +76,49 @@ public class Solution {
             last.next = curr;
             last = last.next;
         }
+
+        return dummy.next;
+    }
+
+
+
+    // Not mine solution
+    //time O(C*log(L)) - L - number of lists, C - count of all nodes, the same as with priority Q
+    // Space complexity O(logL) - deepness of recursion
+    // https://leetcode.com/problems/merge-k-sorted-lists/discuss/10522/My-simple-java-Solution-use-recursion
+    public ListNode mergeKLists3333(ListNode[] lists) {
+        return partition(lists, 0, lists.length - 1);
+    }
+
+    // technique with partition similar to quick sort
+    private ListNode partition(ListNode[] lists, int begin, int end) {
+        if(begin > end) return null;
+        if(begin == end) return lists[begin];
+
+        int mid = (begin + end) / 2;
+        ListNode left = partition(lists, begin, mid);
+        ListNode right = partition(lists, mid + 1, end);
+        return merge(left, right);
+    }
+
+    private ListNode merge(ListNode first, ListNode second) {
+        ListNode dummy = new ListNode(0);
+        ListNode last = dummy;
+
+        while (first != null && second != null) {
+            if(first.val <= second.val) {
+                last.next = first;
+                first = first.next;
+            }
+            else {
+                last.next = second;
+                second = second.next;
+            }
+            last = last.next;
+        }
+
+        if(first != null) last.next = first;
+        if(second != null) last.next = second;
 
         return dummy.next;
     }
