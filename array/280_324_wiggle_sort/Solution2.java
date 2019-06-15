@@ -46,6 +46,7 @@ public class Solution2 {
 
 
     // O(N) solution is pretty complex
+    // But idea is to put numbers that are bigger than median on odd indexes, others on even indexes
     // https://leetcode.com/problems/wiggle-sort-ii/discuss/77682/Step-by-step-explanation-of-index-mapping-in-Java
     // https://evelynn.gitbooks.io/google-interview/wiggle_sort_ii.html
 }
