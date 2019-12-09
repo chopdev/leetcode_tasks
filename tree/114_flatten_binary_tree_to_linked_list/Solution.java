@@ -27,7 +27,7 @@
  * */
 public class Solution {
 
-    // My solution
+    // My good solution
     // O(N) time and space
     // I firstly solved it to flatten to left side
     // but turned out that it's needed to flatten to right side
@@ -59,6 +59,23 @@ public class Solution {
         node.right = node.left;
         node.left = null;
         setRight(node.right);
+    }
+
+
+
+    // not mine cool solution
+    // https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/36977/My-short-post-order-traversal-Java-solution-for-share
+    public void flatten2222(TreeNode root) {
+        flatten(root,null);
+    }
+    private TreeNode flatten(TreeNode root, TreeNode pre) {
+        if(root==null) return pre;
+        pre=flatten(root.right,pre);
+        pre=flatten(root.left,pre);
+        root.right=pre;
+        root.left=null;
+        pre=root;
+        return pre;
     }
 }
 
