@@ -46,4 +46,24 @@ public class Solution {
         }
         return count;
     }
+
+    // Not mine solution
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, new Comparator<int[]>() {
+            public int compare(int[] p1, int[] p2) {
+                return p1[0] - p2[0];
+            }
+        });
+        int res = 0;
+        int idx = 0;
+        while (idx < points.length) {
+            int rightMost = points[idx][1];
+            res++;
+            while (idx < points.length && points[idx][0] <= rightMost) {
+                rightMost = Math.min(rightMost, points[idx][1]);
+                idx++;
+            }
+        }
+        return res;
+    }
 }
