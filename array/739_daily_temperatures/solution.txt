@@ -1,0 +1,52 @@
+/*
+
+[70 65 63] -> [0 0 0]
+[70 72 73] -> [1 1 1]
+[70 65 65 70] -> [0 2 1 0]
+[70 65 65 70 76] -> [4 2 1 1 0]
+
+
+ [73, 74, 75, 71, 69, 72, 76, 73]
+
+ O(N^2)
+
+
+// 0, 4     i=5
+ [70 65 65 63 67 75]
+ [70 65 65 63 67 67]
+
+int begin = 0;
+int end = 0;
+
+*/
+
+
+// O(N)
+// 74 73
+// [73,74,75,71,69,72,76,73]
+// [1,1,4,2,1,1,0,0]
+public int[] dailyTemperatures(int[] T) {
+    if (T == null) 
+        return null;
+ 
+    int[] res = new int[T.length];
+    Stack<Integer> indexes = new Stack<>();
+    for (int i = 0; i<T.length - 1; i++) {
+        if(T[i] >= T[i + 1]) {
+            indexes.push(i);
+        } else {
+            indexes.push(i);
+            while(indexes.size() > 0) {
+                int candidateIndex = indexes.peek();
+                if (T[candidateIndex] < T[i + 1]) {
+                    indexes.pop();
+                    res[candidateIndex] = i + 1 - candidateIndex; 
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    return res;
+}
