@@ -1,0 +1,29 @@
+// 3 2 1
+// 1 2 3
+
+/*
+My solution, solved from the first time
+O(N^2) solution time, O(N) space
+
+O(N*logN) is also possible if we can sort elements and preserve links on their previous index
+*/
+public int lengthOfLIS(int[] nums) {
+    int[] dp = new int[nums.length];
+    for(int i = 0; i < nums.length; i++) {
+        dp[i] = 1;
+    }
+
+    for (int i = nums.length - 1; i >= 0; i--) {
+       for (int j = i + 1; j < nums.length; j++) {
+           if (nums[i] < nums[j]) {
+               dp[i] = Math.max(dp[i], dp[j] + 1);
+           }
+        } 
+    }
+
+    int max = dp[0];
+    for(int i = 0; i < nums.length; i++)
+        max = Math.max(dp[i], max);
+
+    return max;
+}
