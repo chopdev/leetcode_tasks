@@ -1,0 +1,94 @@
+
+
+/*
+
+O(R*C + N*P)
+
+[ a n a t ]
+[ b o o s ]     [hanat, ooo, oooo, obn, ananas] 
+[ k i o l ]
+[ k i a m ]
+
+Hash<Char, Point> points
+
+class Point {
+    row,
+    col
+}
+
+Depth first search
+
+
+*/
+
+class Point {
+    int row;
+    int col;
+    char value;
+
+    public Point(int row, int col, char value) {
+        this.row = row;
+        this.col = col;
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object p) {
+        Point other = (Point)p;
+        return this.row == other.row && this.col == other.col && this.value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.row * 10 + this.col * 100 + (this.value - 'a') * 1000;
+    }
+}
+
+public List<String> findWords(char[][] board, String[] words) {
+    Map<Char, List<Point>> points = new HashMap<>();
+    for(int i = 0; i<board.length; i++)
+        for(int j = 0; j<board[0].length; j++) {
+            char letter = board[i][j];
+            if (!points.containsKey(letter)) {
+                points.put(letter, new ArrayList<>);
+            }
+            points.get(letter).add(new Point(i, j, letter));
+        }
+            
+
+    List<String> foundWords = new ArrayList();
+    for (String word : words) {
+        if (!points.containsKey(word.charAt(0)))
+            continue;
+
+        for (Point initial : points.get(word.charAt(0))) {
+            boolean found = dfs(initial.row, initial.col, board, new HashSet<>(), word, 0);
+            if (found) {
+                foundWords.add(word);
+                break;
+            } 
+        }
+    }
+
+    return foundWords;
+}
+
+private boolean dfs(int row, int col, char[][] board, HashSet<Point> seen, String word, int currInd) {
+    if (row < 0 || col < 0
+        || row >= board.length || col >= board[0].length 
+        || board[row][col] != word.charAt(currInd)
+        || seen.contains(board[row][col])) {
+        return false;
+    }
+
+    if (currInd == word.length - 1) {
+        return true;
+    }
+
+    seen.add(new Point(row, col, word.charAt(currInd)));
+
+    return dfs(row, col + 1, board, seen, word, currInd + 1) ||
+        dfs(row, col - 1, board, seen, word, currInd + 1) ||
+        dfs(row - 1, col, board, seen, word, currInd + 1) ||
+        dfs(row + 1, col, board, seen, word, currInd + 1);
+}
