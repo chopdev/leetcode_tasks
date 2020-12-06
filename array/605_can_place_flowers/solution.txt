@@ -1,0 +1,40 @@
+/*
+
+605. Can Place Flowers
+https://leetcode.com/problems/can-place-flowers/
+
+[1 0 0 0 0 1 0 1 0 1 0 1 0 0 0]
+
+[1 0 1]
+[0 1 0]
+[0 1 0 0 1]
+[0 0 0 0 1]
+
+
+Questions:
+1) can we modify the array?
+
+*/
+
+// My solution O(N) time, O(1) space
+public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    int count = 0;
+    for (int i = 0; i < flowerbed.length; i++) {
+        if (canPlace(flowerbed, i)) {
+            count++;
+            i ++; // move 2 postions ahead, one in loop and one here
+        }
+
+        if (count >= n) {
+            return true;
+        }
+    } 
+    return false;
+}
+
+private boolean canPlace(int[] flowerbed, int i) {
+    boolean currentEmpty = flowerbed[i] == 0;
+    boolean leftEmpty = i - 1 >= 0 ? flowerbed[i - 1] == 0 : true;
+    boolean rightEmpty = i + 1 < flowerbed.length ? flowerbed[i + 1] == 0 : true;
+    return currentEmpty && leftEmpty && rightEmpty;
+}
