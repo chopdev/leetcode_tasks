@@ -87,7 +87,7 @@ public class Solution {
         if(s.isEmpty()) return 0;
         int[] memo = new int[s.length()];
         Arrays.fill(memo, -1);
-        return getCountWays(s, 0, memo);
+        return numDecodings3333(s, 0, memo);
     }
 
     private int numDecodings3333(String s, int ind, int[] memo) {

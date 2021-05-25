@@ -12,6 +12,7 @@ public class Main {
         int count5 = sol.numDecodings4444("00"); // 0
         int count6 = sol.numDecodings4444("01"); // 0
         int count7 = sol.numDecodings4444("101"); // 1
-        int count8 = sol.numDecodings4444("100"); // 1
+        System.out.println(sol.numDecodings4444("100")); // 0
+        System.out.println(sol.numDecodings3333("2100")); // 0
     }
 }
