@@ -32,6 +32,7 @@ n8.next = n9
 
 ##########################################################################
 
+# My solution, O(N) time, O(1) space
 def partition(head: Node, x: int) -> Node:
     node = head
     while (node != None and node.next != None):
