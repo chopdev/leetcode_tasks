@@ -31,6 +31,7 @@ print(permutations("abc")) #  'cba', 'bca', 'bac', 'cab', 'acb', 'abc'
 print(permutations("aab")) # 'baa', 'aba', 'aab'
 print(permutations("aaa")) # aaa
 
+
 print(permutations("a")) # a
 print(permutations("")) # ""
 print(permutations(None)) # None
