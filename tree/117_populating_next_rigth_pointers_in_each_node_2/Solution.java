@@ -31,7 +31,7 @@ public class Solution {
     // Not my
     //based on level order traversal
     // https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/discuss/37828/O(1)-space-O(n)-complexity-Iterative-Solution
-    public void connect(TreeLinkNode root) {
+    /*public void connect(TreeLinkNode root) {
 
         TreeLinkNode head = null; //head of the next level
         TreeLinkNode prev = null; //the leading node on the next level
@@ -68,6 +68,6 @@ public class Solution {
             prev = null;
         }
         
-    }
+    }*/
 
 }
