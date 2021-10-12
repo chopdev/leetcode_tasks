@@ -1,4 +1,6 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -71,17 +73,22 @@ public class Solution {
         }
         
         int topLang = getMostPopularLanguage(languageToUsage);
+        int[] langToLearn = new int[] {topLang};
         int peopleToTeach = 0;
-        for (int[] unmetFriendship : unmetFriendships) {
-            int usr1 = unmetFriendship[0];
-            int usr2 = unmetFriendship[1];
-            int[] langToLearn = new int[] {topLang};
-            if (!languagesIntersect(languages[usr1 - 1], langToLearn))
-                peopleToTeach++;
-            if (!languagesIntersect(languages[usr2 - 1], langToLearn))
+        for (int person : getPeople(unmetFriendships)) {
+            if (!languagesIntersect(languages[person - 1], langToLearn))
                 peopleToTeach++;
         }
         return peopleToTeach;
+    }
+
+    private Set<Integer> getPeople(List<int[]> friendships) {
+        Set<Integer> res = new HashSet<>();
+        for (int[] persons : friendships) {
+            res.add(persons[0]);
+            res.add(persons[1]);
+        }
+        return res;
     }
 
     private int getMostPopularLanguage(Map<Integer, Integer> languageToUsage) {
