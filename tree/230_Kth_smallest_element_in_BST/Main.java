@@ -1,5 +1,15 @@
 public class Main {
 
+    /*
+            80
+        /        \
+       50       100
+    /     \
+    25     60
+    /  \    /  \
+    2  35  55  66     
+        
+    */
     public static void main(String[] args) {
 	    TreeNode r80 = new TreeNode(80);
         TreeNode r50 = new TreeNode(50);
@@ -24,9 +34,14 @@ public class Main {
         r60.right = r66;
 
         Solution s = new Solution();
-        int res = s.kthSmallest(r80, 6);
-        int res1 = s.kthSmallest(r80, 1);
-        int res2 = s.kthSmallest(r80, 2);
-        int res3 = s.kthSmallest(r80, 9);
+        int res = s.kthSmallest(r80, 6); // 60
+        int res1 = s.kthSmallest(r80, 1); // 2
+        int res2 = s.kthSmallest(r80, 2); // 25
+        int res3 = s.kthSmallest(r80, 9); //100
+
+        System.out.println(res);
+        System.out.println(res1);
+        System.out.println(res2);
+        System.out.println(res3);
     }
 }
