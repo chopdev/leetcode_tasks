@@ -1,7 +1,5 @@
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -42,13 +40,15 @@ import java.util.Map;
  * */
 
 /**
- * My solution (with bugs, but idea seems to be right, except maybe?? for getting first element from the hashset)
+ * My solution (hard to implement without mistakes, but faster than 89% of submissions)
+ * Double linked list + hashMap. Each node of linked list contains count of times words were increased + hash set of these words
+ *
  * O(1) time for all operations
  * O(N) space
  * */
 public class AllOne {
 
-
+    // each Node contains all the keys with the same count
     class Node {
         int count;
         HashSet<String> words;
@@ -61,7 +61,6 @@ public class AllOne {
     }
 
     Map<String, Node> wordToNodeMap = new HashMap<>();
-    Deque<Node> queue = new LinkedList<>();
     Node head;
     Node last;
 
@@ -108,9 +107,9 @@ public class AllOne {
         Node currentNode = wordToNodeMap.get(key);
         currentNode.words.remove(key);
 
-        if (currentNode.prev == head) {
+        if (currentNode.count == 1) {
             wordToNodeMap.remove(key);
-        } else if (currentNode.prev.count == currentNode.count - 1) {
+        } else if (currentNode.prev != head && currentNode.prev.count == currentNode.count - 1) {
             currentNode.prev.words.add(key);
             wordToNodeMap.put(key, currentNode.prev);
         } else {
