@@ -1,4 +1,10 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 /**
  * 2385. Amount of Time for Binary Tree to Be Infected
@@ -66,7 +72,7 @@ public class Solution {
      * - Each node has a unique value. (Meaning there are no couple of sources of infections)
      * - A node with a value of start exists in the tree.
      * */
-    public int amountOfTime(TreeNode root, int start) {
+    public int amountOfTime2222(TreeNode root, int start) {
         HashMap<Integer, Integer> nodeToMinutes = new HashMap<>();
         dfs(root, start, nodeToMinutes);
         return nodeToMinutes.values().stream().max((x, y) -> x - y).get();
@@ -105,4 +111,56 @@ public class Solution {
             }
         }
     }
+
+
+    /**
+     * My implementation, but not my idea
+     *
+     * Idea taken from here
+     * https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/solutions/2456601/bfs-after-creating-graph-full-explanation/
+     * https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/solutions/2462842/java-clean/
+     * */
+    public int amountOfTime(TreeNode root, int start) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        buildGraph(root, graph);
+
+        HashSet<Integer> seen = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        int levels = -1;
+        while (!queue.isEmpty()) {
+            int countOnLevel = queue.size();
+            levels ++;
+            for (int i = 0; i < countOnLevel; i++) {
+                int node = queue.poll();
+                seen.add(node);
+                for (int adjNode : graph.get(node)) {
+                    if (!seen.contains(adjNode)) queue.add(adjNode);
+                }
+            }
+        }
+
+        return levels;
+    }
+
+    private void buildGraph(TreeNode node, Map<Integer, List<Integer>> graph) {
+        if (node == null) return;
+        graph.putIfAbsent(node.val, new ArrayList<>());
+
+        if (node.left != null) {
+            graph.get(node.val).add(node.left.val);
+            graph.putIfAbsent(node.left.val, new ArrayList<>());
+            graph.get(node.left.val).add(node.val);
+            buildGraph(node.left, graph);
+        }
+
+        if (node.right != null) {
+            graph.get(node.val).add(node.right.val);
+            graph.putIfAbsent(node.right.val, new ArrayList<>());
+            graph.get(node.right.val).add(node.val);
+            buildGraph(node.right, graph);
+        }
+    }
+
+
 }
