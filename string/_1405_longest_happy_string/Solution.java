@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * 1405. Longest Happy String
@@ -50,7 +51,7 @@ public class Solution {
 
     // My solution, beats 88%
     // sorting is O(1), time & space O(A+B+C)
-    public String longestDiverseString(int a, int b, int c) {
+    public String longestDiverseString2222(int a, int b, int c) {
         Entry aa = new Entry('a', a);
         Entry bb = new Entry('b', b);
         Entry cc = new Entry('c', c);
@@ -93,5 +94,49 @@ public class Solution {
         }
 
         return res.toString();
+    }
+
+
+    // My implementation, idea is inspired from the below link
+    // https://leetcode.com/problems/longest-happy-string/solutions/564254/java-greedy-on-frequency-with-priorityqueue-o-nlogn/
+    public String longestDiverseString(int a, int b, int c) {
+        int[] counts = new int[3];
+        counts[0] = a;
+        counts[1] = b;
+        counts[2] = c;
+
+        // interesting idea to use array from the closure, although some "class Node {char ch; int count; }" will be cleaner
+        PriorityQueue<Integer> queue = new PriorityQueue<>((ind1, ind2) -> Integer.compare(counts[ind2], counts[ind1]));
+        queue.offer(0);
+        queue.offer(1);
+        queue.offer(2);
+        StringBuilder res = new StringBuilder();
+
+        for (int i = 0; i < a + b + c; i++) {
+            int maxCountIndex = queue.poll();
+            char currentChar = getCharFromIndex(maxCountIndex);
+
+            if (res.length() < 2 || res.charAt(i - 1) != currentChar || res.charAt(i - 2) != currentChar) {
+                res.append(currentChar);
+                counts[maxCountIndex] --;
+                if (counts[maxCountIndex] > 0) queue.offer(maxCountIndex);
+            } else {
+                if (queue.isEmpty())
+                    return res.toString(); // max possible string we can build
+
+                int nextMaxCountIndex = queue.poll();
+                char nextMaxCountChar = getCharFromIndex(nextMaxCountIndex);
+                res.append(nextMaxCountChar);
+                counts[nextMaxCountIndex] --;
+                if (counts[maxCountIndex] > 0) queue.offer(maxCountIndex);
+                if (counts[nextMaxCountIndex] > 0) queue.offer(nextMaxCountIndex);
+            }
+        }
+
+        return res.toString();
+    }
+
+    private char getCharFromIndex(int ind) {
+        return ind == 0 ? 'a' : ind == 1 ? 'b' : 'c';
     }
 }
