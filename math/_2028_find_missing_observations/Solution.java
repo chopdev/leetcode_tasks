@@ -73,7 +73,7 @@ public class Solution {
      *
      * SImilar solution, O(N+M) time
      * */
-    public int[] missingRolls(int[] rolls, int mean, int n) {
+    public int[] missingRolls2222(int[] rolls, int mean, int n) {
         int curSum = Arrays.stream(rolls).sum(), m = rolls.length;
         int missingSum = mean * (n + m) - curSum;
         if (missingSum < n || missingSum > 6*n) return new int[0];
