@@ -15,5 +15,7 @@ public class Main {
         System.out.println(sol.isMatch22222("ab", "ac")); // false
         System.out.println(sol.isMatch22222("l", "*c")); // false
         System.out.println(sol.isMatch22222("aaaaaakb", "a*b*c*.")); // false
+
+        System.out.println(sol.isMatch22222("aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*"));
     }
 }

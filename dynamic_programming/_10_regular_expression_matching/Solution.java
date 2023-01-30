@@ -73,7 +73,10 @@ public class Solution {
 
 
     /**
-     * NOT finished!
+     * My solution, same idea is above but with memoization
+     *
+     * Failing for this case
+     * sol.isMatch22222("aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*")
      * */
     public boolean isMatch22222(String s, String p) {
         if (s.equals(p)) return true;
@@ -84,7 +87,7 @@ public class Solution {
 
     private boolean isMatchDfs(String text, String pattern, int i, int j, Boolean[][] memo) {
         if (j == pattern.length()) return i == text.length(); // true if both are finished
-        if (i == text.length()) return j == pattern.length() - 3 && pattern.charAt(pattern.length() - 1) == '*'; // true if text finished and p is *
+        if (i == text.length()) return j == pattern.length() - 2 && pattern.charAt(pattern.length() - 1) == '*'; // true if text finished and p is *
         if (memo[i][j] != null) return memo[i][j];
 
         boolean firstMatched = text.charAt(i) == pattern.charAt(j) || pattern.charAt(j) == '.';
