@@ -71,7 +71,8 @@ public class Solution {
 
     /**
      * My solution, recursion + memo
-     * O(M) time, O(M*N) space
+     * O(M^2) time because M is less than N
+     * O(M^2) space
      * */
     public int maximumScore(int[] nums, int[] multipliers) {
         int[][] memo = new int[multipliers.length][nums.length];
@@ -95,21 +96,27 @@ public class Solution {
 
 
 
-    // not finished
+    /**
+     * Not my
+     *https://leetcode.com/explore/featured/card/dynamic-programming/631/strategy-for-solving-dp-problems/4100/
+     *
+     * we need to iterate backwards starting from m because the base case happens when i equals m).
+     * We also need to initialize dp with one extra row so that we don't go out of bounds in the first iteration of the outer loop.
+     * */
     public int maximumScore3333(int[] nums, int[] multipliers) {
-        int[][] dp = new int[multipliers.length][nums.length];
-        for (int i = 0; i < multipliers.length; i++) {
-            dp[i] = new int[nums.length];
-        }
-        dp[0][0] = Math.max(nums[0] * multipliers[0], nums[0] * multipliers[multipliers.length - 1]);
+        int n = nums.length;
+        int m = multipliers.length;
+        int[][] dp = new int[m + 1][m + 1]; // M is less than N. Add +1 for first iteration
 
-        for (int i = 1; i < multipliers.length; i++) {
-            for (int left = 0; left <= i; left++) {
-                int right = nums.length - 1 - (i - left);
-                dp[i][left] = Math.max(dp[i-1][Math.max(0, left - 1)] + nums[left] * multipliers[i], dp[i-1][left]  + nums[right] * multipliers[i]);
+        for (int i = m - 1; i >= 0; i--) {
+            for (int left = i; left >= 0; left--) {
+                int mult = multipliers[i];
+                int right = n - 1 - (i - left);
+                dp[i][left] = Math.max(mult * nums[left] + dp[i + 1][left + 1],
+                        mult * nums[right] + dp[i + 1][left]);
             }
         }
 
-        return dp[multipliers.length - 1][nums.length - 1];
+        return dp[0][0];
     }
 }
