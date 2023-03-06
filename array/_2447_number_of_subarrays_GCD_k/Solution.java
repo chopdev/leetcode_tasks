@@ -70,4 +70,9 @@ public class Solution {
         if (b == 0) return a;
         return gcd(b, a % b);
     }
+
+
+
+    // O(n2log(n))
+    // https://leetcode.com/problems/number-of-subarrays-with-gcd-equal-to-k/solutions/2734313/java-100-fastest-o-n2log-n-tc-o-1-sc-easy-brute-force/?orderBy=most_votes
 }
