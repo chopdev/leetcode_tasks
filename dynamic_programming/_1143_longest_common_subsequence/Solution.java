@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * 1143. Longest Common Subsequence
  * https://leetcode.com/problems/longest-common-subsequence/
@@ -42,8 +44,9 @@ public class Solution {
     char[]  text2;
 
 
-    // O(2^MAX(N, M))
-    public int longestCommonSubsequence(String text1, String text2) {
+    // My initial, simple recursion
+    // O(2^(N*M))
+    public int longestCommonSubsequence2222(String text1, String text2) {
         this.text1 = text1.toCharArray();
         this.text2 = text2.toCharArray();
         return getLCS(0, 0);
@@ -63,6 +66,43 @@ public class Solution {
         int longetstIfSkipCurr = getLCS(i + 1, j);
 
         return Math.max(longestIfTakeCurr, longetstIfSkipCurr);
+    }
+
+
+    /**
+     * My memo solution
+     * We either take current char from text1 if there is a matching char at text2. Or we just skip current char.
+     *
+     * O(N*M) time and space
+     * */
+    public int longestCommonSubsequence(String text1, String text2) {
+        this.text1 = text1.toCharArray();
+        this.text2 = text2.toCharArray();
+        int[][] memo = new int[text1.length()][text2.length()];
+        for (int i = 0; i < text1.length(); i++) {
+            memo[i] = new int[text2.length()];
+            Arrays.fill(memo[i], Integer.MIN_VALUE);
+        }
+        return getLCS(0, 0, memo);
+    }
+
+    private int getLCS(int i, int j, int[][] memo) {
+        if (i >= text1.length || j >= text2.length)
+            return 0;
+        if (memo[i][j] != Integer.MIN_VALUE)
+            return memo[i][j];
+
+        int k = j;
+        for (; k < text2.length; k++) {
+            if (text1[i] == text2[k])
+                break;
+        }
+
+        int longestIfTakeCurr = k < text2.length ? 1 + getLCS(i + 1, k + 1, memo) : Integer.MIN_VALUE;
+        int longetstIfSkipCurr = getLCS(i + 1, j, memo);
+
+        memo[i][j] = Math.max(longestIfTakeCurr, longetstIfSkipCurr);
+        return memo[i][j];
     }
 
 }

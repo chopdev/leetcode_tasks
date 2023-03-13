@@ -6,5 +6,6 @@ public class Main {
         System.out.println(sol.longestCommonSubsequence("abc", "aaabc")); // 3
         System.out.println(sol.longestCommonSubsequence("abc", "def")); // 0
 
+        System.out.println(sol.longestCommonSubsequence("bsbininm", "jmjkbkjkv")); // 1
     }
 }
