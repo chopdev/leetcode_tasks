@@ -105,4 +105,6 @@ public class Solution {
         return memo[i][j];
     }
 
+    // DP[i][j] = DP[i - 1][j - 1] + 1 , if text1[i] == text2[j] DP[i][j] = max(DP[i - 1][j], DP[i][j - 1]) , otherwise
+
 }
