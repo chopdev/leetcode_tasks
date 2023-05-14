@@ -1,4 +1,6 @@
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * 277. Find the Celebrity
@@ -35,36 +37,112 @@ import java.util.HashSet;
 public class Solution {
 
     /**
-     * not working for [[1,0],[0,1]]
+     * My brute force
+     *
+     * Important to note:
+     * The definition of a celebrity is that all the other n - 1 people know the celebrity, but the celebrity does not know any of them.
+     *
+     * We might have the case where there are multiple persons known to everyone else.
+     * We might also have a case when there is a person not known to anyone and who doesn't know anyone.
+     *
+     * O(N^2) time
+     *
      * */
     public int findCelebrity(int n) {
-        if (n == 2) {
-            return knows(0, 1) ? (knows(1, 0) ? -1 : 1) : 0;
-        }
-        HashSet<Integer> set = new HashSet<>();
-        return dfs(0, n, set);
-    }
-
-    private int dfs(int curr, int n, HashSet<Integer> visited) {
-        if (visited.size() == n) return -1;
-        int unknown = 0;
-        visited.add(curr);
-        for (int i = 0; i < n; i++) {
-            if (curr == i) continue;
-            if (knows(curr, i)) {
-                if (!visited.contains(i))
-                    return dfs(i, n, visited);
-            } else {
-                unknown ++;
+        List<Integer> famous = new ArrayList<>();
+        for (int i = 0; i < n; i ++) { // find persons known to everyone
+            boolean knownToEveryone = true;
+            for (int j = 0; j < n; j++) {
+                if (i == j) continue;
+                if (!knows(j, i)) {
+                    knownToEveryone = false;
+                    break;
+                }
             }
+            if (knownToEveryone)
+                famous.add(i);
         }
 
-        if (unknown == n - 1) return curr;
+        for (int curr : famous) {  // find out if famous persons know any others
+            boolean knowsSomeone = false;
+            for (int i = 0; i < n; i ++) {
+                if (curr == i) continue;
+                if (knows(curr, i)) {
+                    knowsSomeone = true;
+                    break;
+                }
+            }
+            if (!knowsSomeone) return curr;
+        }
+
         return -1;
     }
 
     private boolean knows(int a, int b) {
         // stub function
         return false;
+    }
+
+    /**
+     * O(N) time and space, not my
+     * https://leetcode.com/problems/find-the-celebrity/solutions/71240/ac-java-solution-using-stack/?envType=study-plan-v2&id=premium-algo-100&orderBy=most_votes
+     * */
+    public int findCelebrity3333(int n) {
+        // base case
+        if (n <= 0) return -1;
+        if (n == 1) return 0;
+
+        Stack<Integer> stack = new Stack<>();
+
+        // put all people to the stack
+        for (int i = 0; i < n; i++) stack.push(i);
+
+        int a = 0, b = 0;
+
+        while (stack.size() > 1) {
+            a = stack.pop(); b = stack.pop();
+
+            if (knows(a, b))
+                // a knows b, so a is not the celebrity, but b may be
+                stack.push(b);
+            else
+                // a doesn't know b, so b is not the celebrity, but a may be
+                stack.push(a);
+        }
+
+        // double check the potential celebrity
+        int c = stack.pop();
+
+        for (int i = 0; i < n; i++)
+            // c should not know anyone else
+            if (i != c && (knows(c, i) || !knows(i, c)))
+                return -1;
+
+        return c;
+    }
+
+    /**
+     *
+     * not my solution
+     * O(N) time, O(1) space
+     * https://leetcode.com/problems/find-the-celebrity/solutions/71227/java-solution-two-pass/?envType=study-plan-v2&id=premium-algo-100&orderBy=most_votes
+     *
+     * suppose the candidate after the first for loop is person k, it means 0 to k-1 cannot be the celebrity, because they know a previous or current candidate.
+     * Also, since k knows no one between k+1 and n-1, k+1 to n-1 can not be the celebrity either. Therefore, k is the only possible celebrity, if there exists one.
+     * The remaining job is to check if k indeed does not know any other persons and all other persons know k.
+     *
+     * TO SUM UP:
+     * knows(i,j) eliminates either i or j. knows(i,j) == true then i can't be a celeb. since a celeb knows nobody and knows(i,j) == false then j can't be a celeb since everyone must know the celeb.
+     * */
+    public int findCelebrity22222(int n) {
+        int candidate = 0;
+        for(int i = 1; i < n; i++){
+            if(knows(candidate, i))
+                candidate = i;
+        }
+        for(int i = 0; i < n; i++){
+            if(i != candidate && (knows(candidate, i) || !knows(i, candidate))) return -1;
+        }
+        return candidate;
     }
 }
