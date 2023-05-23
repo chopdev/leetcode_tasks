@@ -70,6 +70,13 @@ public class Solution {
     * Great solution, also O(N*logN) but interesting approach
      * less error prone and concise
     * https://leetcode.com/problems/meeting-rooms-ii/solutions/203658/hashmap-treemap-resolves-scheduling-problem/
+     *
+     * Balanced Binary Search Tree: TreeMap uses a balanced binary search tree (specifically, a Red-Black tree) as its underlying data structure.
+     * Key-Value Mapping: TreeMap allows key-value pairs, where each key is unique. It ensures that the keys are sorted and provides efficient operations to retrieve, insert, and delete key-value pairs.
+     * Iteration: TreeMap provides methods to iterate over the keys, values, or entries in sorted order, such as keySet(), values(), and entrySet(). The iteration order follows the natural ordering or the custom comparator.
+     * Submap Views: TreeMap supports operations to obtain submaps based on a range of keys, allowing you to work with a subset of the original map. These submap views are backed by the original map and any changes made to them affect the original map as well.
+     *
+     * It's important to note that the operations' complexity in TreeMap, such as insertion, deletion, and search, is O(log n), where n is the number of elements in the map.
     * */
     public int minMeetingRooms2222(int[][] intervals) {
         Map<Integer, Integer> map = new TreeMap<>(); // key is a time, value is a count of started or ended intervals at this point of time
