@@ -1,6 +1,8 @@
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 /**
  * 253. Meeting Rooms II
@@ -64,26 +66,21 @@ public class Solution {
      * https://leetcode.com/problems/meeting-rooms-ii/solutions/67857/ac-java-solution-using-min-heap/
      * */
 
-    /*
-    * https://leetcode.com/problems/meeting-rooms-ii/solutions/67855/explanation-of-super-easy-java-solution-beats-98-8-from-pinkfloyda/
+    /**
+    * Great solution, also O(N*logN) but interesting approach
+     * less error prone and concise
+    * https://leetcode.com/problems/meeting-rooms-ii/solutions/203658/hashmap-treemap-resolves-scheduling-problem/
     * */
     public int minMeetingRooms2222(int[][] intervals) {
-        int[] starts = new int[intervals.length];
-        int[] ends = new int[intervals.length];
-        for(int i=0; i<intervals.length; i++) {
-            starts[i] = intervals[i][0];
-            ends[i] = intervals[i][1];
+        Map<Integer, Integer> map = new TreeMap<>(); // key is a time, value is a count of started or ended intervals at this point of time
+        for (int[] itl : intervals) {
+            map.put(itl[0], map.getOrDefault(itl[0], 0) + 1);
+            map.put(itl[1], map.getOrDefault(itl[1], 0) - 1);
         }
-        Arrays.sort(starts);
-        Arrays.sort(ends);
-        int rooms = 0;
-        int endsItr = 0;
-        for(int i=0; i<starts.length; i++) {
-            if(starts[i]<ends[endsItr])
-                rooms++;
-            else
-                endsItr++;
-        }
-        return rooms;
+        int room = 0, k = 0;
+        for (int v : map.values())
+            k = Math.max(k, room += v);
+
+        return k;
     }
 }
