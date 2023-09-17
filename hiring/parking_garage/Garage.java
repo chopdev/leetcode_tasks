@@ -12,7 +12,12 @@ import java.util.UUID;
  *
  * Good qustions to ask:
  * - can we have different car sizes?
- * - should we care about concurrency?
+ * - what is the spot assignment strategy? e.g. random, closest to the entrance, least occupied floor etc.
+ * - how many entrances can we have? (if more than two concurrency is important)
+ *
+ *
+ * good video:
+ * https://www.youtube.com/watch?v=tVRyb4HaHgw&ab_channel=ThinkSoftware
  * */
 public class Garage {
 
