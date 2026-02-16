@@ -1,4 +1,8 @@
 /*
+
+42 trapping rain water
+https://leetcode.com/problems/trapping-rain-water/
+
 [5] -> 0
 [1, 1] -> 0
 [1, 5] -> 0
