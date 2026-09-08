@@ -35,4 +35,25 @@ class Solution {
 
         return res;
     }
+
+    // Solution 2: DFS visits the rightmost node at each level first.
+    public List<Integer> rightSideView2(TreeNode root) {
+        if (root == null) return new ArrayList<>();
+
+        List<Integer> res = new ArrayList<>();
+        dfs(root, 0, res);
+
+        return res;
+    }
+
+    private void dfs(TreeNode node, int layer, List<Integer> res) {
+        if (node == null) return;
+
+        if (res.size() - 1 < layer) {
+            res.add(node.val);
+        }
+
+        dfs(node.right, layer + 1, res);
+        dfs(node.left, layer + 1, res);
+    }
 }
