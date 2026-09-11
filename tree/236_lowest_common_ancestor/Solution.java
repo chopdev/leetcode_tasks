@@ -1,7 +1,3 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Stack;
-
 /*
 236. Lowest Common Ancestor of a Binary Tree
 https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
@@ -40,10 +36,31 @@ QUESTIONS:
 SOLUTION
 https://leetcode.com/articles/lowest-common-ancestor-of-a-binary-tree/
 * */
-public class Solution {
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
+
+class Solution {
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return dfs(root, p, q);
+    }
+
+    TreeNode dfs(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) return null;
+
+        TreeNode leftNode = dfs(node.left, p, q);
+        TreeNode rightNode = dfs(node.right, p, q);
+
+        if (leftNode != null && rightNode != null) return node;
+        if (node == p || node == q) return node;
+
+        return leftNode != null ? leftNode : rightNode;
+    }
 
     // My BAD partially working solution
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    // Solution 2: previous attempt, retained for reference; not fully correct.
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null || p == null || q == null) return null;
         return preOrder(root, p, q, new SearchInfo(), new Stack<>());
     }
