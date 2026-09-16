@@ -28,7 +28,42 @@
     Then continue to use preorder array in recursion to build next child Node and return it from recursion
 */
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
+
+    /**
+     * Preorder identifies the root of each subtree.
+     * Inorder partitions the remaining nodes into left and right subtrees.
+     * Time: O(n); auxiliary space: O(n).
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        preorderIndex = -1;
+        Map<Integer, Integer> inorderMap = new HashMap<>(); // node to index
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+
+        return build(preorder, inorderMap, 0, preorder.length - 1);
+    }
+
+    TreeNode build(int[] preorder, Map<Integer, Integer> inorderMap, int inorderLeft, int inorderRight) {
+        if (inorderLeft > inorderRight) return null;
+
+        preorderIndex++;
+        int root = preorder[preorderIndex];
+        int inorderIndex = inorderMap.get(root);
+
+        TreeNode left = build(preorder, inorderMap, inorderLeft, inorderIndex - 1);
+        TreeNode right = build(preorder, inorderMap, inorderIndex + 1, inorderRight);
+
+        TreeNode rootNode = new TreeNode(root);
+        rootNode.left = left;
+        rootNode.right = right;
+
+        return rootNode;
+    }
 
     public class TreeNode {
         int val;
@@ -44,11 +79,11 @@ class Solution {
     }
 
 
-    // My solution
-    // Time O(N*logN) - logN because of findIndexOfNode(), it will decrease ~twice on each recursion level
+    // Solution 2: previous implementation using a linear inorder search.
+    // Time O(N^2) in the worst case for a skewed tree.
     // space O(N) - depth of recursion
     int preorderIndex = 0;
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
         preorderIndex = 0;
         return dfs(preorder, inorder, 0, inorder.length - 1);
     }
