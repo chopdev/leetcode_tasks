@@ -1,4 +1,5 @@
 /**
+230. Kth Smallest Element in a BST
 https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
 
 Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
@@ -29,9 +30,35 @@ Output: 3
 What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently?
 How would you optimize the kthSmallest routine?
 **/
-import java.util.*;
+import java.util.LinkedList;
 
-public class Solution {
+class Solution {
+    int index;
+
+    // Time: O(h + k); stack space: O(h), where h is the tree height.
+    // Assumes a fresh Solution instance; reset index before reusing this method.
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) return -1;
+
+        TreeNode res = dfs(root, k);
+        return res.val;
+    }
+
+    TreeNode dfs(TreeNode node, int k) {
+        if (node == null) return null;
+
+        TreeNode left = dfs(node.left, k);
+        if (left != null) return left;
+
+        index++;
+        if (index == k) return node;
+
+        TreeNode right = dfs(node.right, k);
+        if (right != null) return right;
+
+        return null;
+    }
+
     // Mine solution O(logN) time, O(logN) space (because of recursion deepness)
     public int kthSmallest2222(TreeNode root, int k) {
         if(root == null) return -1;
@@ -79,24 +106,24 @@ public class Solution {
     } */
 
 
-    // My solution, counter and result can be wrapped in a class
+    // Solution 2: previous implementation; counter and result can be wrapped in a class.
     int counter = 0; 
     TreeNode res = null;
-    public int kthSmallest(TreeNode root, int k) {
+    public int kthSmallest2(TreeNode root, int k) {
         counter = 0; 
         res = null;
-        dfs(root, k);
+        dfs2(root, k);
         return res.val;
     }
 
-    public void dfs(TreeNode node, int k) {
+    public void dfs2(TreeNode node, int k) {
         if (node == null || res != null) return;
-        dfs(node.left, k);
+        dfs2(node.left, k);
         counter ++;
         if (counter == k) {
             res = node;
         }
-        dfs(node.right, k);
+        dfs2(node.right, k);
     }
 
 
