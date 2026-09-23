@@ -124,6 +124,41 @@ class Solution {
         }
     }
 
+    // Solution 3: try each possible end index and recurse on palindromic prefixes.
+    // Time: O(S * 2^S); auxiliary space: O(S), excluding output.
+    public List<List<String>> partition3(String s) {
+        List<List<String>> res = new ArrayList<>();
+        backtrack3(s, 0, new ArrayList<>(), res);
+        return res;
+    }
+
+    private void backtrack3(String s,
+        int start,
+        List<String> partitions,
+        List<List<String>> res) {
+
+        if (start == s.length()) {
+            res.add(new ArrayList<>(partitions));
+            return;
+        }
+
+        for (int end = start; end < s.length(); end++) {
+            if (isPalindrome3(s, start, end)) {
+                partitions.add(s.substring(start, end + 1));
+                backtrack3(s, end + 1, partitions, res);
+                partitions.remove(partitions.size() - 1);
+            }
+        }
+    }
+
+    private boolean isPalindrome3(String s, int l, int r) {
+        while (l < r) {
+            if (s.charAt(l++) != s.charAt(r--))
+                return false;
+        }
+        return true;
+    }
+
     private boolean isPalindrome(String str, int start, int end) {
         while (start <= end) {
             if(str.charAt(start) != str.charAt(end)) return false;
