@@ -1,8 +1,6 @@
-import java.util.Arrays;
-
 /**
- https://leetcode.com/problems/house-robber/description/
  198. House Robber
+ https://leetcode.com/problems/house-robber/description/
 
  You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
@@ -38,12 +36,32 @@ import java.util.Arrays;
  3) Apply DP
 
 * */
-public class Solution {
+import java.util.Arrays;
 
+class Solution {
+
+    // [4, 1, 1, 4]
+    // dp[i]: maximum money obtainable from houses 0 through i.
+    // dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]).
+    // Time: O(N); auxiliary space: O(N).
+    public int rob(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            int prev = i - 2 < 0 ? 0 : dp[i - 2];
+            dp[i] = Math.max(dp[i - 1], prev + nums[i]);
+        }
+
+        return dp[n - 1];
+    }
+
+    // Solution 2: previous recursive implementation.
     // Mine working, but slow solution O(2^N)
     // Recursive bottom-up solution
     // We can't use memoization here, because we path state from the bottom to end
-    public int rob(int[] nums) {
+    public int rob2(int[] nums) {
         return rob(nums, 0, 0);
     }
 
