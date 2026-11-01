@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  127. Word Ladder
 https://leetcode.com/problems/word-ladder/
@@ -44,12 +42,83 @@ https://leetcode.com/problems/word-ladder/
  https://leetcode.com/articles/word-ladder/
  
 * */
-public class Solution {
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
+class Solution {
+
+    /*
+     abc
+     ["bbc", "bbb", "bbk", "kbk", "kkk", "abk", "akk", "kkk"]
+
+     Time: O(N^2 * L), where N is the number of words and L is word length.
+     Space: O(N^2).
+    */
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) return 0;
+        if (!wordList.contains(beginWord)) wordList.add(beginWord);
+        Map<String, List<String>> graph = new HashMap<>();
+
+        for (int i = 0; i < wordList.size(); i++) {
+            for (int j = i + 1; j < wordList.size(); j++) {
+                String w1 = wordList.get(i);
+                String w2 = wordList.get(j);
+                int diff = 0;
+                for (int k = 0; k < w1.length(); k++) {
+                    if (w1.charAt(k) != w2.charAt(k)) diff++;
+                    if (diff > 1) break;
+                }
+                if (diff == 1) {
+                    if (!graph.containsKey(w1)) graph.put(w1, new ArrayList<>());
+                    if (!graph.containsKey(w2)) graph.put(w2, new ArrayList<>());
+
+                    graph.get(w1).add(w2);
+                    graph.get(w2).add(w1);
+                }
+            }
+        }
+
+        if (!graph.containsKey(beginWord) || !graph.containsKey(endWord)) return 0;
+
+        Queue<String> q = new ArrayDeque<>();
+        Set<String> visited = new HashSet<>();
+        q.offer(beginWord);
+        visited.add(beginWord);
+        int count = 1;
+
+        while (!q.isEmpty()) {
+            int levelSize = q.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                String node = q.poll();
+                List<String> adj = graph.get(node);
+
+                for (String word : adj) {
+                    if (visited.contains(word)) continue;
+                    if (word.equals(endWord)) return count + 1;
+                    q.offer(word);
+                    visited.add(word);
+                }
+            }
+
+            count++;
+        }
+
+        return 0;
+    }
+
+    // Solution 2: previous DFS attempt, retained for reference.
     // My solution
     // But I used DFS here, which is not suitable for closest path finding
     // Anyway Idea with using of graph was good here
-    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
         int endInd = -1;
         for (int i = 0; i < wordList.size(); i++)
             if(wordList.get(i).equals(endWord)) endInd = i;
