@@ -35,13 +35,13 @@ import java.util.LinkedList;
  */
 
 // Mine not efficient solution
-public class LRUCache {
+public class LRUCachePrevious {
 
     HashMap<Integer, Integer> keyValue;
     LinkedList<Integer> keysList;  // first items have bigger priority
     int capacity;
 
-    public LRUCache(int capacity) {
+    public LRUCachePrevious(int capacity) {
         keyValue = new HashMap<>();
         keysList = new LinkedList<>();
         this.capacity = capacity;
