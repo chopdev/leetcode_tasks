@@ -54,6 +54,50 @@ import java.util.Set;
 
 class Solution {
 
+    /**
+     * Time: O(26 * N * L^2), including candidate string construction and hashing.
+     * There are O(26 * N * L) candidate substitutions.
+     * Space: O(N * L) as a conservative bound for queued strings and the set.
+     */
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) return 0;
+
+        Set<String> words = new HashSet<>(wordList); // acts like visited
+        Queue<String> q = new ArrayDeque<>();
+        q.offer(beginWord);
+        int length = 1;
+
+        while (!q.isEmpty()) {
+            int levelSize = q.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                String curr = q.poll();
+                char[] chars = curr.toCharArray();
+
+                for (int j = 0; j < chars.length; j++) {
+                    char original = chars[j];
+
+                    for (char candidate = 'a'; candidate <= 'z'; candidate++) {
+                        if (candidate == original) continue;
+
+                        chars[j] = candidate;
+                        String next = new String(chars);
+                        if (next.equals(endWord)) return length + 1;
+
+                        if (words.contains(next)) {
+                            q.offer(next);
+                            words.remove(next);
+                        }
+                        chars[j] = original;
+                    }
+                }
+            }
+            length++;
+        }
+
+        return 0;
+    }
+
     /*
      abc
      ["bbc", "bbb", "bbk", "kbk", "kkk", "abk", "akk", "kkk"]
@@ -61,7 +105,8 @@ class Solution {
      Time: O(N^2 * L), where N is the number of words and L is word length.
      Space: O(N^2).
     */
-    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    // Alternative: construct the adjacency graph before BFS.
+    public int ladderLength2222(String beginWord, String endWord, List<String> wordList) {
         if (!wordList.contains(endWord)) return 0;
         if (!wordList.contains(beginWord)) wordList.add(beginWord);
         Map<String, List<String>> graph = new HashMap<>();
@@ -179,7 +224,7 @@ class Solution {
     // Not mine solution
     // https://leetcode.com/problems/word-ladder/discuss/40717/Another-accepted-Java-solution-(BFS)
     // O(M*N) time
-    public int ladderLength2222(String start, String end, List<String> wordList) {
+    public int ladderLengthPreviousBfs(String start, String end, List<String> wordList) {
         Set<String> dict = new HashSet<>(wordList);
         if(!dict.contains(end)) return 0;
         // Use queue to help BFS
