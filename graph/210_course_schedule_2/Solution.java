@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  210. Course Schedule II
  https://leetcode.com/problems/course-schedule-ii/
@@ -33,11 +31,67 @@ import java.util.*;
  Read more about how a graph is represented.
  You may assume that there are no duplicate edges in the input prerequisites.
  */
-public class Solution {
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 
-    // My solution using DFS
-    // time O(V+E)
+class Solution {
+
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> adj = new HashMap<>();
+        Map<Integer, Integer> inDegree = new HashMap<>(); // how many nodes point to the current node
+
+        // Register every course, including ones with no edges.
+        for (int i = 0; i < numCourses; i++) {
+            adj.put(i, new ArrayList<>());
+            inDegree.put(i, 0);
+        }
+
+        for (int[] pair : prerequisites) {
+            adj.computeIfAbsent(pair[1], k -> new ArrayList<>()).add(pair[0]);
+            inDegree.put(pair[0], inDegree.getOrDefault(pair[0], 0) + 1);
+        }
+
+        int[] res = new int[numCourses];
+        int ind = 0;
+        Queue<Integer> q = new ArrayDeque<>();
+        // A visited set is not needed.
+
+        for (Integer node : inDegree.keySet()) {
+            if (inDegree.get(node) == 0) {
+                q.offer(node);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            Integer node = q.poll();
+            res[ind++] = node;
+            numCourses--;
+            if (numCourses == 0) return res;
+
+            for (Integer next : adj.get(node)) {
+                inDegree.put(next, inDegree.get(next) - 1);
+                if (inDegree.get(next) == 0) {
+                    q.offer(next);
+                }
+            }
+        }
+
+        for (Integer node : inDegree.keySet()) {
+            if (inDegree.get(node) != 0) return new int[0];
+        }
+
+        return res;
+    }
+
+    // Solution 2: my previous solution using DFS.
+    // time O(V+E)
+    public int[] findOrder2(int numCourses, int[][] prerequisites) {
         if(numCourses <= 0) return null;
         HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>();
 
