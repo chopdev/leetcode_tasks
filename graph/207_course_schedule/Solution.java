@@ -1,11 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
- https://leetcode.com/problems/course-schedule/description/
  207. Course Schedule
+ https://leetcode.com/problems/course-schedule/description/
 
  There are a total of n courses you have to take, labeled from 0 to n-1.
  Some courses may have prerequisites, for example to take course 0 you have to first take course 1,
@@ -35,14 +30,105 @@ import java.util.Queue;
  You may assume that there are no duplicate edges in the input prerequisites.
 
 * */
-public class Solution {
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
+class Solution {
+
+    enum DfsStatus {
+        NOT_SEEN,
+        VISITING,
+        VISITED;
+    }
+
+    // DFS approach. Time: O(V + E); space: O(V + E).
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> adj = new HashMap<>();
+        Map<Integer, DfsStatus> status = new HashMap<>();
+
+        // Build the graph and initialize traversal status.
+        for (int[] pair : prerequisites) {
+            adj.computeIfAbsent(pair[1], k -> new ArrayList<>()).add(pair[0]);
+            adj.computeIfAbsent(pair[0], k -> new ArrayList<>());
+            status.put(pair[0], DfsStatus.NOT_SEEN);
+            status.put(pair[0], DfsStatus.NOT_SEEN);
+        }
+
+        for (Integer node : adj.keySet()) {
+            if (!dfs(node, adj, status)) return false;
+        }
+        return true;
+    }
+
+    boolean dfs(Integer node, Map<Integer, List<Integer>> adj, Map<Integer, DfsStatus> status) {
+        if (status.get(node) == DfsStatus.VISITED) return true;
+        if (status.get(node) == DfsStatus.VISITING) return false;
+
+        status.put(node, DfsStatus.VISITING);
+
+        for (Integer next : adj.get(node)) {
+            if (!dfs(next, adj, status)) return false;
+        }
+
+        status.put(node, DfsStatus.VISITED);
+        return true;
+    }
+
+    // Solution 2: Kahn's algorithm. Time: O(V + E); space: O(V + E).
+    public boolean canFinish222(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> adj = new HashMap<>();
+        Map<Integer, Integer> degree = new HashMap<>();
+
+        // Build the graph and set in-degree for each node.
+        for (int[] pair : prerequisites) {
+            adj.computeIfAbsent(pair[1], k -> new ArrayList<>()).add(pair[0]);
+            adj.computeIfAbsent(pair[0], k -> new ArrayList<>());
+            degree.put(pair[0], degree.getOrDefault(pair[0], 0) + 1);
+            if (!degree.containsKey(pair[1])) degree.put(pair[1], 0);
+        }
+
+        Queue<Integer> q = new ArrayDeque<>();
+        Set<Integer> visited = new HashSet<>();
+
+        // Add nodes with zero in-degree to the queue.
+        for (Integer node : degree.keySet()) {
+            if (degree.get(node) == 0) q.offer(node);
+        }
+
+        while (!q.isEmpty()) {
+            int layerSize = q.size();
+            for (int i = 0; i < layerSize; i++) {
+                Integer curr = q.poll();
+                visited.add(curr);
+
+                for (Integer next : adj.get(curr)) {
+                    if (visited.contains(next)) continue;
+                    degree.put(next, degree.get(next) - 1);
+                    if (degree.get(next) == 0) q.offer(next);
+                }
+            }
+        }
+
+        for (Integer node : degree.keySet()) {
+            if (degree.get(node) > 0) return false;
+        }
+
+        return true;
+    }
 
     // My good solution using DFS
     // if A references B, than A is dependent from B
     // Topological sort (which means create linear structure from the graph, removing nodes without dependencies one by one)
     // Each node has 3 statuses: Initial, Visited and Visiting
     // if using dfs we get node that is Visiting, that means that there is a cycle in a graph
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public boolean canFinishPreviousDfs(int numCourses, int[][] prerequisites) {
         HashMap<Integer, Node> graph = new HashMap<>();
         for(int[] pair : prerequisites) {
             if(!graph.containsKey(pair[0])) graph.put(pair[0], new Node(pair[0]));
