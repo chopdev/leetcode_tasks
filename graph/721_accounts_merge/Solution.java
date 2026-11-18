@@ -74,6 +74,79 @@ class Solution {
         }
     }
 
+    // Optimized DFS: expand each account and each email only once.
+    public List<List<String>> accountsMergeOptimizedDfs(List<List<String>> accounts) {
+        Map<String, List<Integer>> emailToAccounts = new HashMap<>();
+
+        // email -> accounts containing that email
+        for (int account = 0; account < accounts.size(); account++) {
+            for (int i = 1; i < accounts.get(account).size(); i++) {
+                String email = accounts.get(account).get(i);
+
+                emailToAccounts
+                    .computeIfAbsent(email, k -> new ArrayList<>())
+                    .add(account);
+            }
+        }
+
+        List<List<String>> res = new ArrayList<>();
+        Set<Integer> visitedAccounts = new HashSet<>();
+        Set<String> visitedEmails = new HashSet<>();
+
+        for (int account = 0; account < accounts.size(); account++) {
+            if (visitedAccounts.contains(account)) continue;
+
+            List<String> emails = new ArrayList<>();
+
+            dfsOptimized(
+                account,
+                accounts,
+                emailToAccounts,
+                visitedAccounts,
+                visitedEmails,
+                emails
+            );
+
+            Collections.sort(emails);
+            emails.add(0, accounts.get(account).get(0));
+
+            res.add(emails);
+        }
+
+        return res;
+    }
+
+    private void dfsOptimized(
+        int account,
+        List<List<String>> accounts,
+        Map<String, List<Integer>> emailToAccounts,
+        Set<Integer> visitedAccounts,
+        Set<String> visitedEmails,
+        List<String> emails
+    ) {
+        if (!visitedAccounts.add(account)) return;
+
+        for (int i = 1; i < accounts.get(account).size(); i++) {
+            String email = accounts.get(account).get(i);
+
+            // This email was already expanded from another account.
+            if (!visitedEmails.add(email)) continue;
+
+            emails.add(email);
+
+            for (int nextAccount : emailToAccounts.get(email)) {
+                dfsOptimized(
+                    nextAccount,
+                    accounts,
+                    emailToAccounts,
+                    visitedAccounts,
+                    visitedEmails,
+                    emails
+                );
+            }
+        }
+    }
+
     /*
      Unfinished union-find draft, retained for reference.
 
