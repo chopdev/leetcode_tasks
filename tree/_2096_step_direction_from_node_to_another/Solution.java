@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * 2096. Step-By-Step Directions From a Binary Tree Node to Another
  * https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/
@@ -43,7 +39,57 @@ import java.util.List;
  * 1 <= startValue, destValue <= n
  * startValue != destValue
  * */
-public class Solution {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    /**
+     * Approach 1:
+     * Build paths from the root to the start and destination nodes.
+     * Skip the shared prefix, which leads to the lowest common ancestor.
+     * Replace the remaining start path with 'U' steps, then append the
+     * remaining destination path.
+     */
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        StringBuilder startPath = new StringBuilder(); // path from root to start
+        StringBuilder destPath = new StringBuilder();  // path from root to dest
+
+        buildPath(root, startValue, startPath);
+        buildPath(root, destValue, destPath);
+
+        System.out.println(startPath.toString());
+        System.out.println(destPath.toString());
+
+        // Skip the shared path from the root to the lowest common ancestor.
+        int i = 0;
+        for (; i < startPath.length() && i < destPath.length() && startPath.charAt(i) == destPath.charAt(i); i++) {
+        }
+
+        // Can be simpler: return "U".repeat(startPath.length() - i) + destPath.substring(i);
+        String startString = startPath.toString().substring(i, startPath.length());
+        String destString = destPath.toString().substring(i, destPath.length());
+
+        return "U".repeat(startString.length()) + destString;
+    }
+
+    private boolean buildPath(TreeNode node, int value, StringBuilder path) {
+        if (node == null) return false;
+        if (node.val == value) return true;
+
+        path.append("L");
+        boolean leftFound = buildPath(node.left, value, path);
+        if (leftFound) return true;
+        path.deleteCharAt(path.length() - 1);
+
+        path.append("R");
+        boolean rightFound = buildPath(node.right, value, path);
+        if (rightFound) return true;
+        path.deleteCharAt(path.length() - 1);
+
+        return false;
+    }
+
     public class TreeNode {
         int val;
         TreeNode left;
@@ -60,13 +106,13 @@ public class Solution {
     private TreeNode commonParent;
 
     /**
-     * My solution
+     * Approach 2: my solution using an explicit lowest common ancestor.
      * The idea is to find closest common parent of two nodes. Once we have common parent, just find path from it to start and dest nodes.
      * O(N) time and space
      *
      * I don't like to put commonParent into state, but it makes code simpler to look, not prod version.
      * */
-    public String getDirections(TreeNode root, int startValue, int destValue) {
+    public String getDirections222222(TreeNode root, int startValue, int destValue) {
         commonParent = null;
         findLeastCommonParent(root, startValue, destValue);
 
